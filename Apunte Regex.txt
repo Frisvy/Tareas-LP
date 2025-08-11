@@ -1,0 +1,27 @@
+Position Paterns
+^ busca el incio de un string
+$ busca el final de un string
+\d busca en cada string un numero
+\s encuentra espacios en blanco
+\w encuentra cualquier palabra ej: ^\w\w\w\w\s busca una palabra que empieza con 4 letras seguido de un espacio
+
+
+Quantifiers (numero de veces que se repite una expresion)
+{m} numero de ocurrencias
++ a la expresion le van a seguir 1 o mas palabras
+? 0 o 1
+* a la expresion le van a seguir 0 o mas palabras 
+
+Ejemplos: (los [] sirven para crear un set de caracteres a buscar)
+[aeiou]{2} busca una palabra que tenga 2 vocales seguidas
+^\w{7}$ busca cualquier palabra que tenga 7 caracteres cualquiera, ninguno mas ni menos
+\w{7} busca cualquier nombre que tenga 7 caracteres
+
+Funciones (sea "match = re.search(patron, texto)" )
+re.search(patron,texto): retorna 
+match.start() : retorna el indice donde empieza la palabra
+match.end() : retorna el indice donde termina la palabra
+match.span() : retorna el intervalo en donde esta la palabra en formato (x, y) 
+match.group() : permite acceder a secciones especificas de una cadena de texto (poner parentesis en el regex para acceder a los grupos) (para dar nombre propio poner ?P<nombre> ejemplo: "^(?P<nombre>\w+)\s+(?P<apellido>\w+)$"
+re.match(patern, string, flags=0): si hay 0 o mas caracteres al inicio de un string, busca la expresion regular "pattern", y retorna el string que la contiene. Retorna "none" si el string no se encuentra
+ 
