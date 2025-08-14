@@ -4,7 +4,7 @@ archivo = open("estrofas.txt", "r")
 contador = 1
 # poner el ^ dentro de [] niega todo lo que esta dentro del set
 
-simbolos_invalidos = "[^a-zA-ZñÑ0-9\?\¿¡!,\\.\-;'-():\"\s]"#corregir, no reconoce bien los ¿
+simbolos_invalidos = "[^a-zA-ZñÑ0-9¿?¡!,\\.\-;'-():\"\s]"#corregir, no reconoce bien los ¿
 simbolos_validos = "[a-zA-ZñÑ0-9?¿¡!,.-\;'-():\"]"
 digitos = "[0-9]"
 vocal = "(AEIOU|aeiou)"
@@ -27,10 +27,18 @@ def estrofas_validas(archivo):
         else:
             if len(lista_versos) == 4:
                 for verso in lista_versos:
-                    if re.search(simbolos_invalidos, verso):
+                    coso = re.compile(r"[a-zA-ZáéíóúÁÉÍÓÚñÑ¿?!\",.;:'-]+")
+                    if coso.findall(verso):
+                        continue
+                    else:
                         Estrofa = False
                         lista_versos = []
                         break
+
+                    """if re.search(simbolos_invalidos, verso):
+                        Estrofa = False
+                        lista_versos = []
+                        break"""
                 lista_estrofas.append(Estrofa)
             else:
                 lista_estrofas.append(False)
