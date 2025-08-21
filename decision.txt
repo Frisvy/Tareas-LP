@@ -1,7 +1,4 @@
-Estrofa 1: Invalida
-Estrofa 2: 5.4
-Rimas : asonante, Bonus, consonante
-Estrofa 3: 7.8
-Rimas : asonante, consonante
-Estrofa 4: 6.8
-Rimas : asonante, Bonus
+Estrofa 1: 2.4
+Rimas : sin rima, asonante, consonante
+Estrofa 2: 6.6
+Rimas : consonante, asonante
