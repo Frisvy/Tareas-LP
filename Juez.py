@@ -146,9 +146,9 @@ Descripcion: recibe una lista de estrofas con versos y retorna una lista con uni
 """
 def final_versos(estrofa): #pasarle un indice de lista_estrofa_verso, para rescatar las ultimas palabras de los versos y poder ver las rimas despues
     ultima_palabra_versos = []
-    if len(estrofa) == 4:
-        for verso in estrofa:
-            palabras_verso = verso.split()
+    for verso in estrofa:
+        palabras_verso = verso.split()
+        if palabras_verso:
             ultima_palabra_versos.append(palabras_verso[-1].lower())
     
     return ultima_palabra_versos

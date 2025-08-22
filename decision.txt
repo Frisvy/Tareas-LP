@@ -1,4 +1,4 @@
-Estrofa 1: 2.4
-Rimas : sin rima, asonante, consonante
+Estrofa 1: 2.2
+Rimas : sin rima, consonante
 Estrofa 2: 6.6
 Rimas : consonante, asonante
