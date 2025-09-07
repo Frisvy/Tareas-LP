@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "main.h": "c"
+        "main.h": "c",
+        "entidades.h": "c",
+        "stdbool.h": "c",
+        "tablero.h": "c"
     }
 }

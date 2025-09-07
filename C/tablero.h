@@ -1,12 +1,15 @@
-#include "main.h"
-#include "entidades.h"
+#ifndef TABLERO_H
+#define TABLERO_H
+
 
 typedef struct {
     int W, H;
     void ***celdas; /* celdas[y][x] -> (void*) que apunta a Celda* */
 } Tablero;
 
-struct Tablero* tablero_crear(int ancho, int alto);
+typedef struct Juego Juego; //como uso el #include "tablero.h" en el main.h, necesito hacer este forward declaration para que funcionen bien las funciones 
+
+Tablero* tablero_crear(int ancho, int alto);
 void tablero_imprimir(struct Juego *juego);
-void tablero_cerrar(struct Tablero *tablero);
-void 
+void tablero_cerrar(Tablero *tablero);
+#endif

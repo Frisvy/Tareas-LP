@@ -1,6 +1,9 @@
+#ifndef MAIN_H
+#define MAIN_H
 #include "tablero.h"
 #include "armas.h"
 #include "spawn.h"
+
 
 
 typedef struct Juego {
@@ -10,3 +13,4 @@ typedef struct Juego {
     int dificultad;
     int turno, vivos, jugador_x;
 } Juego;
+#endif

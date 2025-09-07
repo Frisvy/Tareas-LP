@@ -1,3 +1,8 @@
+#ifndef ARMAS_H
+#define ARMAS_H
+#include "main.h"
+#include <stdbool.h>
+
 struct Juego; /* declaracion adelantada para usar la siguiente... */
 
 typedef bool (*FuncArmas)(struct Juego* j);
@@ -13,3 +18,4 @@ bool disparar_armas(struct Juego *juego, int arma_id);
 bool arma_normal (struct Juego *juego); /* id 0 */
 bool arma_perforador (struct Juego *juego); /* id 1 */
 bool arma_especial (struct Juego *juego); /* id 2 */
+#endif

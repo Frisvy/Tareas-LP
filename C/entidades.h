@@ -1,3 +1,7 @@
+#ifndef ENTIDADES_H
+#define ENTIDADES_H
+#include "main.h"
+
 typedef struct {
     int tipo; /* tipo de alien */
     int hp; /* vida actual */
@@ -13,3 +17,4 @@ typedef struct {
 struct Juego; /* forward-declaration para punteros a funcion (armas) */
 void mover_aliens(struct Juego *juego);
 void resolver_danos(struct Juego *juego);
+#endif
