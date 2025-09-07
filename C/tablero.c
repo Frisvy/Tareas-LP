@@ -49,10 +49,15 @@ void tablero_imprimir(Juego *juego){
             if(juego->t->celdas[y][x] == NULL){
                 printf("[.]");
             }
-            else{
-                printf("[%p]",juego->t->celdas[y][x]);
+            else if(juego->t->celdas[y][x] == 1){
+                printf("[D]",juego->t->celdas[y][x]);
             }
-            
+            else if((*Alien)(juego->t->celdas[y][x]) == 2){
+                printf("[S]",juego->t->celdas[y][x]);
+            }
+            else if(juego->t->celdas[y][x] == 3){
+                printf("[E]",juego->t->celdas[y][x]);
+            }
         }        
         printf("\n");
     }

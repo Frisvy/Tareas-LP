@@ -44,28 +44,28 @@ void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien
     }*/
     int y = juego->t->H - 1;
     int x = coordenada_spawn(juego);
-    Alien *alieniga_ultrainsano = malloc(sizeof *alieniga_ultrainsano);
-    alieniga_ultrainsano->tipo = tipo_alien;
-    if (alieniga_ultrainsano->tipo == 1){ // dron
-        alieniga_ultrainsano->hp = 2;
-        alieniga_ultrainsano->x = x;
-        alieniga_ultrainsano->y = y;
-        alieniga_ultrainsano->dx = 0;
+    Alien *alienigena = malloc(sizeof (Alien));
+    alienigena->tipo = tipo_alien;
+    if (alienigena->tipo == 1){ // dron
+        alienigena->hp = 2;
+        alienigena->x = x;
+        alienigena->y = y;
+        alienigena->dx = 0;
     } 
-    else if (alieniga_ultrainsano->tipo == 2){ // skater
-        alieniga_ultrainsano->hp = 1;
-        alieniga_ultrainsano->x = x;
-        alieniga_ultrainsano->y = y;
-        alieniga_ultrainsano->dx = 1;
+    else if (alienigena->tipo == 2){ // skater
+        alienigena->hp = 1;
+        alienigena->x = x;
+        alienigena->y = y;
+        alienigena->dx = 1;
     }
     else{ //especial
-        alieniga_ultrainsano->hp = 1;
-        alieniga_ultrainsano->x = x;
-        alieniga_ultrainsano->y = y;
-        alieniga_ultrainsano->dx = 0;
+        alienigena->hp = 1;
+        alienigena->x = x;
+        alienigena->y = y;
+        alienigena->dx = 0;
     }
-    Celda *celda = malloc(sizeof *celda);
-    celda->alien = alieniga_ultrainsano;
+    Celda *celda = malloc(sizeof (Celda));
+    celda->alien = alienigena;
     celda->dano_pend = 0;
     juego->t->celdas[y][x] = (void*)celda;
     juego->vivos++;
@@ -94,6 +94,7 @@ void spawn_inicio(struct Juego *juego){
         while (aliens_iniciales < 2){
             int alienigena = alien_a_spawnear(juego);
             meter_alien(juego, alienigena);
+            aliens_iniciales++;
         }
     }
     else if (juego->dificultad == 2){ // dificil
@@ -105,6 +106,7 @@ void spawn_inicio(struct Juego *juego){
         while (aliens_iniciales < 3){
             int alienigena = alien_a_spawnear(juego);
             meter_alien(juego, alienigena);
+            aliens_iniciales++;
         }
     }
 }
