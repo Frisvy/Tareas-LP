@@ -3,7 +3,7 @@
 #include "main.h"
 
 typedef struct {
-    int tipo; /* tipo de alien */
+    int tipo; /* tipo de alien */ //1 = dron, 2 = skater, 3 = especial 
     int hp; /* vida actual */
     int x, y; /* posicion en el tablero */
     int dx; /* direccion horizontal (zig-zag), p.ej., -1/+1 */
