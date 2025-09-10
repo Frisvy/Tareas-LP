@@ -42,23 +42,43 @@ void tablero_cerrar(Tablero *tablero){
 void limpiar_consola(){
     printf("\033[2J\033[H");
 }
+void imprimir_jugador(struct Juego *juego){
+
+}
+
 void tablero_imprimir(Juego *juego){
     printf("=====================\n");
-    for(int y = 0; y < juego->t->H; y++){
+    for(int y = juego->t->H - 1; y >= 0; y--){
         for(int x = 0; x < juego->t->W; x++){
-            if(juego->t->celdas[y][x] == NULL){
+            Celda *celda = (Celda*)juego->t->celdas[y][x];
+            
+            if(celda == NULL){
                 printf("[.]");
             }
-            else if(juego->t->celdas[y][x] == 1){
-                printf("[D]",juego->t->celdas[y][x]);
+            else{
+                Alien *alien = (Alien*)celda->alien;
+                if(alien->tipo == 1){
+                    printf("[D]");
+                }
+                else if(alien->tipo == 2){
+                    printf("[S]");
+                }
+                else if(alien->tipo == 3){
+                    printf("[E]");
+                }
             }
-            else if((*Alien)(juego->t->celdas[y][x]) == 2){
-                printf("[S]",juego->t->celdas[y][x]);
+        }       
+        printf("\n");
+    }
+    if((juego->dificultad == 1) || (juego->dificultad == 2)){
+        for(int i = 0; i < 5;i++ ){
+            if(juego->jugador_x != i){
+                printf("   ");
             }
-            else if(juego->t->celdas[y][x] == 3){
-                printf("[E]",juego->t->celdas[y][x]);
+            else{
+                printf(" ^ ");
             }
-        }        
+        }
         printf("\n");
     }
     printf("=====================\n");
@@ -75,6 +95,11 @@ void menu_inicio(Juego* juego){
     printf("Controles: a/d mover | 1=NORMAL 2=PERFORADOR 3=ESPECIAL | q salir | help ayuda\n");
     printf("Seleccione  una dificultad (1 = Facil, 2 = Dificil): ");
     scanf("%d", &juego->dificultad);
-    
+    if(juego->dificultad == 1){
+        juego->jugador_x = 2;
+    }
+    else if(juego->dificultad == 2){
+        juego->jugador_x = 3;
+    }
 }
 

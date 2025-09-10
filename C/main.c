@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 #include "main.h"
 
 
@@ -13,12 +14,12 @@ int main(){
     {
         menu_inicio(juego);
         if(juego->dificultad == 1){ //dificultad facil
-            juego->t = tablero_crear(5,15);
+            juego->t = tablero_crear(5,16); //16 para que el jugador este en y=0, y hayan 15 casillas para mover aliens
             juego->pool.restantes = 15;
         }
         
         else if (juego->dificultad == 2){ // dificultad dificil
-            juego->t = tablero_crear(7,15);
+            juego->t = tablero_crear(7,16);
             juego->pool.restantes = 20;
         }
         else {

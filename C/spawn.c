@@ -84,7 +84,6 @@ void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien
 
 void spawn_inicio(struct Juego *juego){
     int aliens_iniciales = 0;
-    int y = juego->t->H - 1;
     if(juego->dificultad == 1){ // facil
         juego->pool.vivos_tope = 6;
         juego->pool.drone = 6;
