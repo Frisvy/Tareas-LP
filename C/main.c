@@ -17,26 +17,35 @@ void ejecutar_accion(struct Juego *juego, char accion){
         }
         else{
             juego->jugador_x = juego->jugador_x - 1;
+            juego->turno = juego->turno + 1;
         }
     }
-    if(accion == 'd'){
+    else if(accion == 'd'){
         if(juego->dificultad == 1){
-            if((juego->jugador_x + 1)> 4){
+            if((juego->jugador_x + 1) > 4){
                 printf("Accion invalida\n");
             }
             else{
                 juego->jugador_x = juego->jugador_x + 1;
+                juego->turno = juego->turno + 1;
             }
         }
         else if(juego->dificultad == 2){
-            if((juego->jugador_x + 1)> 6){
+            if((juego->jugador_x + 1) > 6){
                 printf("Accion invalida\n");
             }
             else{
                 juego->jugador_x = juego->jugador_x + 1;
+                juego->turno = juego->turno + 1;
             }
         }
+    }    
+    else if(accion == 'h'){
+        printf("Mata a todos los aliens antes de que lleguen a la ultima casilla para ganar, recuerda los controles.\n");
+        printf("Controles: a/d mover | 1=NORMAL 2=PERFORADOR 3=ESPECIAL | q salir | help ayuda\n");
+        printf("¡Buena Suerte!\n");
     }
+    
 }
 
 char accion;
@@ -44,6 +53,7 @@ char accion;
 int main(){
     srand(time(NULL));
     Juego* juego = malloc(sizeof (Juego));
+    juego->turno = 1;
     do
     {
         menu_inicio(juego);

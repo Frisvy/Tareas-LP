@@ -42,9 +42,6 @@ void tablero_cerrar(Tablero *tablero){
 void limpiar_consola(){
     printf("\033[2J\033[H");
 }
-void imprimir_jugador(struct Juego *juego){
-
-}
 
 void tablero_imprimir(Juego *juego){
     printf("=====================\n");

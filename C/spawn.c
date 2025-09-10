@@ -69,7 +69,7 @@ void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien
     celda->dano_pend = 0;
     juego->t->celdas[y][x] = (void*)celda;
     juego->vivos++;
-    juego->pool.restantes--;
+    //juego->pool.restantes--;
     if (tipo_alien == 1){
         juego->pool.drone--;
     }
