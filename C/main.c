@@ -4,8 +4,42 @@
 #include <stdbool.h>
 #include "main.h"
 
+char pedir_accion(){
+    char accion;
+    scanf("%c", &accion);
+    return accion;
+}
 
+void ejecutar_accion(struct Juego *juego, char accion){
+    if(accion == 'a'){
+        if((juego->jugador_x - 1)< 0){
+            printf("Accion invalida\n");
+        }
+        else{
+            juego->jugador_x = juego->jugador_x - 1;
+        }
+    }
+    if(accion == 'd'){
+        if(juego->dificultad == 1){
+            if((juego->jugador_x + 1)> 4){
+                printf("Accion invalida\n");
+            }
+            else{
+                juego->jugador_x = juego->jugador_x + 1;
+            }
+        }
+        else if(juego->dificultad == 2){
+            if((juego->jugador_x + 1)> 6){
+                printf("Accion invalida\n");
+            }
+            else{
+                juego->jugador_x = juego->jugador_x + 1;
+            }
+        }
+    }
+}
 
+char accion;
 
 int main(){
     srand(time(NULL));
@@ -33,6 +67,23 @@ int main(){
     spawn_inicio(juego);
     limpiar_consola();
     tablero_imprimir(juego);
+    accion = pedir_accion();
+    ejecutar_accion(juego,accion);
+    tablero_imprimir(juego);
+    accion = pedir_accion();
+    ejecutar_accion(juego,accion);
+    tablero_imprimir(juego);
+    accion = pedir_accion();
+    ejecutar_accion(juego,accion);
+    tablero_imprimir(juego);
+    accion = pedir_accion();
+    ejecutar_accion(juego,accion);
+    tablero_imprimir(juego);
+    accion = pedir_accion();
+    ejecutar_accion(juego,accion);
+    tablero_imprimir(juego);
+    
+    
     
     
     return(0);

@@ -48,7 +48,7 @@ void imprimir_jugador(struct Juego *juego){
 
 void tablero_imprimir(Juego *juego){
     printf("=====================\n");
-    for(int y = juego->t->H - 1; y >= 0; y--){
+    for(int y = juego->t->H - 1; y >= 0; y--){ //se imprime al reves ya que de esa manera el spawn de aliens corresponde a y= H-1
         for(int x = 0; x < juego->t->W; x++){
             Celda *celda = (Celda*)juego->t->celdas[y][x];
             
@@ -70,8 +70,19 @@ void tablero_imprimir(Juego *juego){
         }       
         printf("\n");
     }
-    if((juego->dificultad == 1) || (juego->dificultad == 2)){
+    if(juego->dificultad == 1){
         for(int i = 0; i < 5;i++ ){
+            if(juego->jugador_x != i){
+                printf("   ");
+            }
+            else{
+                printf(" ^ ");
+            }
+        }
+        printf("\n");
+    }
+    else if(juego->dificultad == 2){
+        for(int i = 0; i < 7;i++ ){
             if(juego->jugador_x != i){
                 printf("   ");
             }
@@ -86,20 +97,30 @@ void tablero_imprimir(Juego *juego){
     printf("Accion (a/d/1/2/3/q/h): ");
     scanf("%c", &juego->accion);
 }
-void rellenar_tablero(Juego  *juego){
-    
-}
+
+
 
 void menu_inicio(Juego* juego){
+    char eleccion_dif;
     printf("=== Space Defender ===\n");
     printf("Controles: a/d mover | 1=NORMAL 2=PERFORADOR 3=ESPECIAL | q salir | help ayuda\n");
     printf("Seleccione  una dificultad (1 = Facil, 2 = Dificil): ");
-    scanf("%d", &juego->dificultad);
+    scanf("%c", &eleccion_dif); //no uso juego->dificultad directamente ya que si alguien pone en la terminal algo distinto de un numero se bugea feo el programa y me sicoseo TT
+    if(eleccion_dif == '1'){
+       juego->dificultad = 1;
+       juego->jugador_x = 2; // se asigna la posicion incial del jugador en el centro del tablero (el centro cambia dependiendo de la diff)
+    }
+    else if(eleccion_dif == '2'){
+        juego->dificultad = 2;
+        juego->jugador_x = 3;
+    }
+    /*scanf("%d", &juego->dificultad);
     if(juego->dificultad == 1){
         juego->jugador_x = 2;
     }
     else if(juego->dificultad == 2){
         juego->jugador_x = 3;
-    }
+    }*/
 }
+
 

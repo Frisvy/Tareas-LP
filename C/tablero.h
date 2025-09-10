@@ -14,6 +14,5 @@ void tablero_imprimir(struct Juego *juego);
 void tablero_cerrar(Tablero *tablero);
 void menu_inicio(struct Juego* juego); //crea un menu de inicio y setea la dificultad del juego
 void limpiar_consola(); //limpia la consola para que se vea mas bonito
-void rellenar_tablero(struct Juego *juego);
 void imprimir_jugador(struct Juego *juego);
 #endif
