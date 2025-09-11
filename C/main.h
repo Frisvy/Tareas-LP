@@ -14,6 +14,7 @@ typedef struct Juego {
     int dificultad; // 1 = facil , 2 = dificil
     int turno, vivos, jugador_x; // n_turnos, n_vivos, posicionx jugador
     char accion; // accion del jugador por turno 
+    bool continuar; // en caso de que el jugador muera se canbia a false para terminar el juego
 } Juego;
 
 char pedir_accion();//funcion que pide un input al jugador y lo retorna como variable

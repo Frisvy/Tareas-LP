@@ -4,7 +4,8 @@
 #include "main.h"
 #include "entidades.h"
 
-int coordenada_spawn(struct Juego *juego){
+
+int coordenada_spawn(struct Juego *juego){ //determina una coordenada aleatoria donde spawneara el siguiente alien, en caso de que no haya espacio suficiente para que spawnee el alien retorna -1
     int y = juego->t->H - 1;
     int coordenadas_libres[juego->t->W];
     int n = 0;
@@ -24,13 +25,13 @@ int coordenada_spawn(struct Juego *juego){
     return coordenada_x;
 }
 
-int alien_a_spawnear(struct Juego *juego){ //determina aleatoriamente el alien que spawneara
+int alien_a_spawnear(struct Juego *juego){ //determina aleatoriamente el tipo de alien que spawneara
     int probabilidad = rand() % 100;
     int tipo_alien;
-    if(probabilidad < 50){
+    if(probabilidad < 40){
         tipo_alien = 1; // dron
     }
-    else if(probabilidad < 80){
+    else if(probabilidad < 70){
         tipo_alien = 2; //skater
     }
     else{
@@ -38,10 +39,10 @@ int alien_a_spawnear(struct Juego *juego){ //determina aleatoriamente el alien q
     }
     return tipo_alien;
 }
-void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien
+void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien y lo inserta en la celda correspondiente
     /*if(juego->vivos >= juego->pool.vivos_tope){
         break;
-    }*/
+    }*/ //colocar eso despues en el main
     int y = juego->t->H - 1;
     int x = coordenada_spawn(juego);
     Alien *alienigena = malloc(sizeof (Alien));
@@ -107,5 +108,10 @@ void spawn_inicio(struct Juego *juego){
             meter_alien(juego, alienigena);
             aliens_iniciales++;
         }
+    }
+}
+void spawn_turno(Juego *juego){
+    if(juego->vivos < juego->pool.vivos_tope){
+        
     }
 }

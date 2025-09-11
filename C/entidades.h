@@ -7,6 +7,7 @@ typedef struct {
     int hp; /* vida actual */
     int x, y; /* posicion en el tablero */
     int dx; /* direccion horizontal (zig-zag), p.ej., -1/+1 */
+    bool marca; // para moverlo una unica vez por turno
 } Alien;
 
 typedef struct {

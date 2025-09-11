@@ -44,6 +44,7 @@ void limpiar_consola(){
 }
 
 void tablero_imprimir(Juego *juego){
+    limpiar_consola();
     printf("=====================\n");
     for(int y = juego->t->H - 1; y >= 0; y--){ //se imprime al reves ya que de esa manera el spawn de aliens corresponde a y= H-1
         for(int x = 0; x < juego->t->W; x++){

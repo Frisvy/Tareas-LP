@@ -44,18 +44,17 @@ void ejecutar_accion(struct Juego *juego, char accion){
         printf("Mata a todos los aliens antes de que lleguen a la ultima casilla para ganar, recuerda los controles.\n");
         printf("Controles: a/d mover | 1=NORMAL 2=PERFORADOR 3=ESPECIAL | q salir | help ayuda\n");
         printf("¡Buena Suerte!\n");
-    }
-    
+    } 
 }
 
-char accion;
+char accion; // variable global 
 
 int main(){
     srand(time(NULL));
     Juego* juego = malloc(sizeof (Juego));
     juego->turno = 1;
-    do
-    {
+    juego->continuar = true;
+    do{
         menu_inicio(juego);
         if(juego->dificultad == 1){ //dificultad facil
             juego->t = tablero_crear(5,16); //16 para que el jugador este en y=0, y hayan 15 casillas para mover aliens
@@ -74,27 +73,13 @@ int main(){
     
     } while ((juego->dificultad != 1) && (juego->dificultad != 2));
     
-    spawn_inicio(juego);
-    limpiar_consola();
-    tablero_imprimir(juego);
-    accion = pedir_accion();
-    ejecutar_accion(juego,accion);
-    tablero_imprimir(juego);
-    accion = pedir_accion();
-    ejecutar_accion(juego,accion);
-    tablero_imprimir(juego);
-    accion = pedir_accion();
-    ejecutar_accion(juego,accion);
-    tablero_imprimir(juego);
-    accion = pedir_accion();
-    ejecutar_accion(juego,accion);
-    tablero_imprimir(juego);
-    accion = pedir_accion();
-    ejecutar_accion(juego,accion);
-    tablero_imprimir(juego);
-    
-    
-    
+    spawn_inicio(juego); //spawn de los primeros enemigos
+    do{
+        tablero_imprimir(juego);   
+        accion = pedir_accion();
+        ejecutar_accion(juego,accion);
+        mover_aliens(juego);
+    } while (accion != 'q');
     
     return(0);
 }
