@@ -18,5 +18,6 @@ typedef struct Juego {
 } Juego;
 
 char pedir_accion();//funcion que pide un input al jugador y lo retorna como variable
+bool validar_accion(struct Juego *juego, char accion);
 void ejecutar_accion(struct Juego *juego, char accion);
 #endif

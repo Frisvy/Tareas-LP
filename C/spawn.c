@@ -110,8 +110,23 @@ void spawn_inicio(struct Juego *juego){
         }
     }
 }
-void spawn_turno(Juego *juego){
+void spawn_turno(Juego *juego){ //meter en el main un rand() para que si sale 30 y hay espacio se llame denuevo a spawn turno
     if(juego->vivos < juego->pool.vivos_tope){
-        
+        if(juego->pool.drone > 0  || juego->pool.skater > 0 || juego->pool.especial > 0 ){
+            int tipo_alien_spawn = alien_a_spawnear(juego);
+            int coordenada = coordenada_spawn(juego);
+            if(coordenada != -1){
+                meter_alien(juego, tipo_alien_spawn);
+                if (tipo_alien_spawn == 1){
+                    juego->pool.drone - 1;
+                }
+                else if(tipo_alien_spawn == 2){
+                    juego->pool.skater - 1;
+                }
+                else if(tipo_alien_spawn == 3){
+                    juego->pool.especial - 1;
+                }
+            }
+        }
     }
 }

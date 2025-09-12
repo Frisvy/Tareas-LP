@@ -7,7 +7,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
     if((juego->turno % 2) != 0){ //si es impar hay q mover el alien, ya que por como implemente la accion del jugador el contador de turnos sube inmediatamente tras el input del jugador
         int nueva_posicion_y;
         int nueva_posicion_x;
-        for(int y = juego->t->H - 1; y >= 0; y--){
+        for(int y = 0; y <juego->t->H; y++){
             for(int x = 0; x < juego->t->W; x++){
                 Celda *celda = juego->t->celdas[y][x];
                 if(celda != NULL && celda->alien != NULL){
@@ -22,7 +22,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                     }
                     if((celda->alien->tipo == 1) || (celda->alien->tipo == 3 )){ // movimiento dron y especial
                         nueva_posicion_x = x;
-                        if(juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL){
+                        if(juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL || juego->t->celdas[nueva_posicion_y][nueva_posicion_x] != NULL ){
                             juego->t->celdas[nueva_posicion_y][nueva_posicion_x] = celda;
                             juego->t->celdas[y][x] = NULL;
                             alien->y = nueva_posicion_y;
@@ -43,7 +43,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                             nueva_posicion_x = x + alien->dx;
                         }
                         if (nueva_posicion_x >= 0 && nueva_posicion_x < juego->t->W){
-                            if (juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL){
+                            if (juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL || juego->t->celdas[nueva_posicion_y][x] != NULL){
                                 juego->t->celdas[nueva_posicion_y][nueva_posicion_x] = celda;
                                 juego->t->celdas[y][x] = NULL; //borramos la celda anterior para que no se duplique el alien
                                 alien->x = nueva_posicion_x;
@@ -53,7 +53,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                                     alien->dx = -alien->dx;
                                 }
                             }
-                            else if (juego->t->celdas[nueva_posicion_y][x] == NULL) {
+                            else if (juego->t->celdas[nueva_posicion_y][x] == NULL || juego->t->celdas[nueva_posicion_y][x] != NULL)  {
                                 juego->t->celdas[nueva_posicion_y][x] = celda;
                                 juego->t->celdas[y][x] = NULL;
                                 alien->y = nueva_posicion_y;

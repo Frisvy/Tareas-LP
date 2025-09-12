@@ -25,7 +25,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                     }
                     if((celda->alien->tipo == 1) || (celda->alien->tipo == 3 )){ // movimiento dron y especial
                         nueva_posicion_x = x;
-                        if(juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL){
+                        if(juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL || juego->t->celdas[nueva_posicion_y][nueva_posicion_x] != NULL ){
                             juego->t->celdas[nueva_posicion_y][nueva_posicion_x] = celda;
                             juego->t->celdas[y][x] = NULL;
                             alien->y = nueva_posicion_y;
@@ -34,35 +34,36 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                     }
                     else if(celda->alien->tipo == 2){ //movimiento skater
                         nueva_posicion_x = x + alien->dx;
-                        if(juego->t->celdas[y][x + 1] != NULL){
-                            juego->t->celdas[nueva_posicion_y][x] = celda;
-                            juego->t->celdas[y][x] = NULL;
-                            alien->y = nueva_posicion_y;
-                            alien->marca = true;
+                        if(nueva_posicion_x >= 0 && nueva_posicion_x < juego->t->W){ // desplazamiento dentro del rango del mapa
+                            Celda *celda_derecha = juego->t->celdas[y][nueva_posicion_x]; //celda con el alien de la derecha
+                            if(celda_derecha != NULL && celda_derecha->alien != NULL){ //si hay un alien 
+                                nueva_posicion_x = x;
+                                nueva_posicion_y = alien->y - 1;
+                            }
                         }
-                        else if(nueva_posicion_x < 0 || nueva_posicion_x >= juego->t->W){ //rebote en caso de chocar los bordes 
+                        if(nueva_posicion_x < 0 || nueva_posicion_x >= juego->t->W){//si nos salimos del borde del mapa hay que rebotar pal otro lado
                             alien->dx = -alien->dx;
                             nueva_posicion_x = x + alien->dx;
                         }
-                        else if(nueva_posicion_x >= 0 && nueva_posicion_x < juego->t->W){ 
-                            if (juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL){
+                        if (nueva_posicion_x >= 0 && nueva_posicion_x < juego->t->W){
+                            if (juego->t->celdas[nueva_posicion_y][nueva_posicion_x] == NULL || juego->t->celdas[nueva_posicion_y][x] != NULL){
                                 juego->t->celdas[nueva_posicion_y][nueva_posicion_x] = celda;
-                                juego->t->celdas[y][x] = NULL;
+                                juego->t->celdas[y][x] = NULL; //borramos la celda anterior para que no se duplique el alien
                                 alien->x = nueva_posicion_x;
                                 alien->y = nueva_posicion_y;
                                 alien->marca = true;
-                                if (alien->x == 0 || alien->x == juego->t->W - 1){ //si el alien esta en cualquier borde hay que invertir la direccion del zigzag 
+                                if (alien->x == 0 || alien->x == juego->t->W - 1) {
                                     alien->dx = -alien->dx;
                                 }
                             }
-                            if(juego->t->celdas[nueva_posicion_y][x] == NULL){ // caso de que el skater choque con otro alien en vez de un muro
+                            else if (juego->t->celdas[nueva_posicion_y][x] == NULL || juego->t->celdas[nueva_posicion_y][x] != NULL)  {
                                 juego->t->celdas[nueva_posicion_y][x] = celda;
                                 juego->t->celdas[y][x] = NULL;
                                 alien->y = nueva_posicion_y;
                                 alien->marca = true;
                             }
                         }
-                    }
+                    }   
                 }
             }
         }
