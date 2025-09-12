@@ -4,6 +4,7 @@
 #include "armas.h"
 #include "spawn.h"
 #include "entidades.h"
+#include "armas.h"
 
 
 

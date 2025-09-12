@@ -91,6 +91,8 @@ void spawn_inicio(struct Juego *juego){
         juego->pool.skater = 4;
         juego->pool.restantes = 15; //aliens a derrotar para ganar el juego
         juego->pool.aliens_randoms = 5; //aliens de cualquier tipo
+        juego->armas.ammo_especial = 3;
+        juego->armas.ammo_perforador = 7;
         while (aliens_iniciales < 2){
             int alienigena = alien_a_spawnear(juego);
             meter_alien(juego, alienigena);
@@ -103,6 +105,8 @@ void spawn_inicio(struct Juego *juego){
         juego->pool.skater = 6;
         juego->pool.restantes = 20;
         juego->pool.aliens_randoms = 6;
+        juego->armas.ammo_especial = 1; //solo un especial en dificil, para q sea.... mas dificilxd
+        juego->armas.ammo_perforador = 7;
         while (aliens_iniciales < 3){
             int alienigena = alien_a_spawnear(juego);
             meter_alien(juego, alienigena);
@@ -118,15 +122,33 @@ void spawn_turno(Juego *juego){ //meter en el main un rand() para que si sale 30
             if(coordenada != -1){
                 meter_alien(juego, tipo_alien_spawn);
                 if (tipo_alien_spawn == 1){
-                    juego->pool.drone - 1;
+                    juego->pool.drone  = juego->pool.drone - 1;
                 }
                 else if(tipo_alien_spawn == 2){
-                    juego->pool.skater - 1;
+                    juego->pool.skater = juego->pool.skater - 1;
                 }
                 else if(tipo_alien_spawn == 3){
-                    juego->pool.especial - 1;
+                    juego->pool.especial = juego->pool.especial - 1;
+                }
+            }
+        }
+        else if(juego->pool.aliens_randoms > 0){
+            int tipo_alien_spawn = alien_a_spawnear(juego);
+            int coordenada = coordenada_spawn(juego);
+            if(coordenada != -1){
+                meter_alien(juego, tipo_alien_spawn);
+                if (tipo_alien_spawn == 1){
+                    juego->pool.aliens_randoms = juego->pool.aliens_randoms - 1;
+                }
+                else if(tipo_alien_spawn == 2){
+                    juego->pool.aliens_randoms = juego->pool.aliens_randoms - 1;
+                }
+                else if(tipo_alien_spawn == 3){
+                    juego->pool.aliens_randoms = juego->pool.aliens_randoms - 1;
                 }
             }
         }
     }
 }
+// CONFIGURAR EL SPAWN DE LOS ALIENS RANDOMS
+// CONFIGURAR MECANICA ALIEN ESPECIAL

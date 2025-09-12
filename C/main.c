@@ -6,7 +6,7 @@
 
 char pedir_accion(){
     char accion;
-    scanf("%c", &accion);
+    scanf(" %c", &accion);
     return accion;
 }
 
@@ -38,7 +38,11 @@ bool validar_accion(struct Juego *juego, char accion){
         printf("¡Buena Suerte!\n");
         validez = false;
     }
+    else if(accion == '1' || accion == '2' || accion == '3'){
+        validez = true;
+    }
     else{
+        printf("Accion invalida\n");
         validez = false;
     }
     return validez;    
@@ -91,16 +95,20 @@ int main(){
         tablero_imprimir(juego);   
         accion = pedir_accion();
         validez_accion = validar_accion(juego, accion);
-        if(validez_accion){
-            ejecutar_accion(juego,accion);
-            mover_aliens(juego);
-            spawn_turno(juego);
-            if(probabilidad < 30){
-                spawn_turno(juego);
-            }
+        if(!validez_accion){
+            continue;
         }
+        
+            
+            
+            
+            
+        }
+        
+        
     } while (accion != 'q');
     
-    return(0);
+    return 0;
 }
-//HACER Q LAS ACCIONES INVALIDAS NO CONSUMAN
+//HACER Q LAS ACCIONES INVALIDAS NO CONSUMAN 
+//

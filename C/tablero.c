@@ -112,13 +112,6 @@ void menu_inicio(Juego* juego){
         juego->dificultad = 2;
         juego->jugador_x = 3;
     }
-    /*scanf("%d", &juego->dificultad);
-    if(juego->dificultad == 1){
-        juego->jugador_x = 2;
-    }
-    else if(juego->dificultad == 2){
-        juego->jugador_x = 3;
-    }*/
 }
 
 

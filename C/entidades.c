@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "main.h"
 #include "entidades.h"
 
@@ -18,6 +19,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                     nueva_posicion_y = alien->y - 1 ;
                     if(nueva_posicion_y == 0){ // hacer algo pa matar al jugador, o cerrar el juego, piensapiensa
                         juego->continuar = false;
+                        printf("Un alien a llegado a la base.\n");
                         return;
                     }
                     if((celda->alien->tipo == 1) || (celda->alien->tipo == 3 )){ // movimiento dron y especial
@@ -73,4 +75,33 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
             }
         }        
     }    
+}
+
+void resolver_danos(struct Juego *juego){
+    for(int y = 1; y < juego->t->H; y++){
+        for(int x = 0; x < juego->t->W; x++){
+            int probabilidad = rand() % 100;
+            Celda *celda_alien = juego->t->celdas[y][x];
+            if(celda_alien != NULL && celda_alien->alien != NULL){
+                if(celda_alien->dano_pend != 0){
+                    celda_alien->alien->hp = celda_alien->alien->hp - celda_alien->dano_pend;
+                    celda_alien->dano_pend = 0;
+                    if(celda_alien->alien->hp <= 0){
+                        celda_alien->alien = NULL;
+                        celda_alien = NULL;
+                        juego->t->celdas[y][x] = celda_alien;
+                        juego->vivos = juego->vivos - 1;
+                        juego->pool.restantes = juego->pool.restantes - 1; 
+                        if(probabilidad < 25){ // 25% de porbabilidad de perforador
+                                juego->armas.ammo_perforador = juego->armas.ammo_perforador + 1;            
+                        }
+                        else if(probabilidad < 50){ // 25% de probabilidad de especial
+                            juego->armas.ammo_especial = juego->armas.ammo_especial + 1;
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
 }
