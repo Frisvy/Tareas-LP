@@ -4,6 +4,12 @@
 #include "main.h"
 #include "entidades.h"
 
+/*
+* Nombre:mover_aliens
+* Parámetros: struct juego
+* Retorno: no retorna
+* Descripción: Determina el movimiento de los aliens. cada 2 turnos mueve los aliens segun las reglas establecidas en el readme, los drones y especiales se mueven 1 casilla hacia abajo, los skaters se mueven en diagonal rebotando con las murallas, y en caso de que vayan a chocar contra otro alien, se mueven derechas hacia abajo, en caso de que un alien llegue a la casilla y=0, corta el bucle principal del main y termina el juego imprimiendo el mensaje de game over
+*/
 void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, esto implica que en el final del turno 2 movemos al alien. ejecutamos la accion del jugador y despues movemos el alien para evitar conflictos en caso de que llegue a y = 0
     if((juego->turno % 2) != 0){ //si es impar hay q mover el alien, ya que por como implemente la accion del jugador el contador de turnos sube inmediatamente tras el input del jugador
         int nueva_posicion_y;
@@ -20,6 +26,7 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
                     if(nueva_posicion_y == 0){ // hacer algo pa matar al jugador, o cerrar el juego, piensapiensa
                         juego->continuar = false;
                         printf("Un alien a llegado a la base.\n");
+                        printf("Game Over\n");
                         return;
                     }
                     if((celda->alien->tipo == 1) || (celda->alien->tipo == 3 )){ // movimiento dron y especial
@@ -76,7 +83,12 @@ void mover_aliens(struct Juego *juego){ //si los aliens bajan cada 2 turnos, est
         }        
     }    
 }
-
+/*
+* Nombre: resolver danos
+* Parámetros: struct juego
+* Retorno: no retorna
+* Descripción: recibe el struct juego y recorre toda las casillas del tablero desde abajo hacia arriba y desde la izquierda a la derecha revisando los aliens y si tienen daño pendiente, en caso de que tengan daño pendiente los borra del tablero liberando su memoria y cambiando su valor a NULL, tambien tiene un 50 porciento de probabilida de dropear municion al eliminar un alien, 25 de perforante y 25 de especial
+*/
 void resolver_danos(struct Juego *juego){
     for(int y = 1; y < juego->t->H; y++){
         for(int x = 0; x < juego->t->W; x++){
@@ -84,7 +96,7 @@ void resolver_danos(struct Juego *juego){
             Celda *celda_alien = juego->t->celdas[y][x];
             if(celda_alien != NULL && celda_alien->alien != NULL){
                 if(celda_alien->dano_pend != 0){
-                    celda_alien->alien->hp = celda_alien->alien->hp - celda_alien->dano_pend;
+                    celda_alien->alien->hp = celda_alien->alien->hp - celda_alien->dano_pend; // se descuenta el daño pendiente
                     celda_alien->dano_pend = 0;
                     if(celda_alien->alien->hp <= 0){
                         free(celda_alien->alien);
@@ -94,10 +106,10 @@ void resolver_danos(struct Juego *juego){
                         juego->t->celdas[y][x] = celda_alien;
                         juego->vivos = juego->vivos - 1;
                         juego->pool.restantes = juego->pool.restantes - 1; 
-                        if(probabilidad < 25){ // 25% de porbabilidad de perforador
+                        if(probabilidad < 25){ // 25% de porbabilidad de municion perforadora
                                 juego->armas.ammo_perforador = juego->armas.ammo_perforador + 1;            
                         }
-                        else if(probabilidad < 50){ // 25% de probabilidad de especial
+                        else if(probabilidad < 50){ // 25% de probabilidad de municion especial
                             juego->armas.ammo_especial = juego->armas.ammo_especial + 1;
                         }
                     }

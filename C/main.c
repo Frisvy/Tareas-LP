@@ -3,13 +3,23 @@
 #include <time.h>
 #include <stdbool.h>
 #include "main.h"
-
+/*
+* Nombre: pedir_accion
+* Parámetros: no recibe
+* Retorno: un char
+* Descripción: pide un char al jugador por consola y lo retorna
+*/
 char pedir_accion(){
     char accion;
     scanf(" %c", &accion);
     return accion;
 }
-
+/*
+* Nombre: validar_accion
+* Parámetros: struct juego y un char que corresponde al input del jugador
+* Retorno: un booleano (true o false)
+* Descripción: determina si la accion del jugador es valida o invalida, y en caso de ser la h imprime un menu de ayuda, se utiliza principalmente en el main para saber si la accion debera consumir turno o no
+*/
 bool validar_accion(struct Juego *juego, char accion){
     bool validez = true;
     if(accion == 'a'){
@@ -47,7 +57,12 @@ bool validar_accion(struct Juego *juego, char accion){
     }
     return validez;    
 }
-
+/*
+* Nombre: ejecutar_accion
+* Parámetros: struct juego y un char
+* Retorno: no retorna
+* Descripción: ejecuta la accion que selecciono el jugador, en caso de ser una accion de disparo llama a la funcion de disparar armas para consumir el turno en caso de que se pudiera disparar
+*/
 void ejecutar_accion(struct Juego *juego, char accion){
     if(accion == 'a'){
             juego->jugador_x = juego->jugador_x - 1;
@@ -68,17 +83,17 @@ void ejecutar_accion(struct Juego *juego, char accion){
     }
 }
 
-char accion; // variable global 
+char accion; // variable global que corresponde al input del jugador, creo que no es necesario que sea global, pero ya que la deje aqui hasta el final ahi se queda
 
 int main(){
-    srand(time(NULL));
+    srand(time(NULL)); // genera la seed para los numeros aleatorios
     Juego* juego = malloc(sizeof (Juego));
     juego->turno = 1;
     juego->continuar = true;
     int probabilidad;
     bool validez_accion;
     juego->vivos = 0;
-    do{
+    do{ //ciclo del menu de inicio del juego, no se avanza hasta que se seleccione una dificultad 
         menu_inicio(juego);
         if(juego->dificultad == 1){ //dificultad facil
             juego->t = tablero_crear(5,16); //16 para que el jugador este en y=0, y hayan 15 casillas para mover aliens
@@ -93,12 +108,12 @@ int main(){
             printf("Selecciona una opcion valida papu :3\n");
         }
     } while ((juego->dificultad != 1) && (juego->dificultad != 2));
-    juego->armas.fn[0] = arma_normal;
+    juego->armas.fn[0] = arma_normal; 
     juego->armas.fn[1] = arma_perforador;
     juego->armas.fn[2] = arma_especial;
 
     spawn_inicio(juego); //spawn de los primeros enemigos
-    do{
+    do{ //ciclo principal del juego donde se piden las acciones al jugador y se activan los efectos, y se imprimen los mensajes en pantalla
         probabilidad = rand() % 100;
         tablero_imprimir(juego);   
         accion = pedir_accion();
@@ -130,5 +145,3 @@ int main(){
     free(juego);
     return 0;
 }
-//HACER Q LAS ACCIONES INVALIDAS NO CONSUMAN 
-//sdadasd

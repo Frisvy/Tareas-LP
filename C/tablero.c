@@ -4,11 +4,12 @@
 // width: ancho
 // height: altura
 
-/*typedef struct {
-    int W, H;
-    void ***celdas;    // celdas[y][x] -> (void*) que apunta a Celda*  
-} Tablero; */
-
+/*
+* Nombre: tablero_crear
+* Parámetros: int del ancho y del alto del tablero
+* Retorno: una variable de tipo tablero
+* Descripción: recibe un ancho y un alto y pide memoria para crear un tablero, el tablero es un conjunto de punteros que representan las celdas en y,x y una celda que almacenara a los aliens
+*/
 Tablero* tablero_crear(int ancho, int alto){
     Tablero* tablero = malloc(sizeof(Tablero));
     tablero->H = alto; // eje Y (filas)
@@ -24,7 +25,12 @@ Tablero* tablero_crear(int ancho, int alto){
     }
     return tablero;
 }
-
+/*
+* Nombre: tablero_cerrar
+* Parámetros: struct tablero
+* Retorno: no retorna, es void
+* Descripción: recorre todo el tablero y libera toda la memoria pedida en el, es decir libera los aliens, despues las celdas y por ultimo el tablero, para evitar leaks de memoria
+*/
 void tablero_cerrar(Tablero *tablero){
     for(int y = 0; y < tablero->H; y++){
         for(int x = 0; x < tablero->W; x++){
@@ -46,13 +52,22 @@ void tablero_cerrar(Tablero *tablero){
     free(tablero);
 }
 
-
+/*
+* Nombre: limpiar_consola
+* Parámetros: no tiene
+* Retorno: no retorna
+* Descripción: imprime en pantalla una secuencia ANSI que limpia la terminal para que se vea mas bonito el juego
+*/
 void limpiar_consola(){
     printf("\033[2J\033[H");
 }
-
+/*
+* Nombre: tablero_imprimir
+* Parámetros: struct Juego
+* Retorno: no retorna, es void
+* Descripción: recorre todo el tablero revisando todas las celdas y los aliens, en caso de haber un alien imprime la letra correspondiente al alien, y asi sucesivamente hasta llegar al jugador, ademas de imprimir el tablero, imprime el HUD del juego, mostrando los controles, las acciones que se pueden realizar y los aliens vivos y restantes para ganar
+*/
 void tablero_imprimir(Juego *juego){
-
     printf("=====================\n");
     for(int y = juego->t->H - 1; y >= 0; y--){ //se imprime al reves ya que de esa manera el spawn de aliens corresponde a y= H-1
         for(int x = 0; x < juego->t->W; x++){
@@ -104,7 +119,12 @@ void tablero_imprimir(Juego *juego){
     scanf("%c", &juego->accion);
 }
 
-
+/*
+* Nombre:menu_inicio
+* Parámetros: struct Juego
+* Retorno: no retorna
+* Descripción: imprime el menu de inicio y pide un input al jugador para determinar en que dificultad se seteara el juego
+*/
 
 void menu_inicio(Juego* juego){
     char eleccion_dif;

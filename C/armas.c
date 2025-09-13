@@ -4,7 +4,12 @@
 #include "main.h"
 #include "armas.h"
 
-
+/*
+* Nombre: arma_normal
+* Parámetros: struct juego
+* Retorno: booleano, variable con true o false
+* Descripción: dispara el arma, y marca daño en caso de impactar a un alien, si impacta imprime mensaje de impacto, y si no indica que fallo
+*/
 bool arma_normal (struct Juego *juego){
     int x = juego->jugador_x;
     bool impacto = false;
@@ -27,7 +32,12 @@ bool arma_normal (struct Juego *juego){
     }
     return impacto;
 }
-
+/*
+* Nombre: arma_perforador
+* Parámetros: struct juego
+* Retorno: booleano
+* Descripción: revisa si hay municion. En caso de que no haya retorna false, en caso de que si haya retorna true, y si impacta a un enemigo le marca el dano para que la funcion de dano lo procese
+*/
 bool arma_perforador(struct Juego *juego){
     int x = juego->jugador_x;
     bool impacto = false;
@@ -43,7 +53,12 @@ bool arma_perforador(struct Juego *juego){
     }
     return impacto;
 }
-
+/*
+* Nombre: arma_especial
+* Parámetros: struct juego
+* Retorno: booleano
+* Descripción: revisa si hay municion, en caso de que no, retorna false, en caso de que si retorna true, y hace el descuento de la municion correspondiente, le marca el daño a los enemigos para q despues se procese
+*/
 bool arma_especial(struct Juego *juego){
     int x = juego->jugador_x;
     bool impacto = false;
@@ -73,15 +88,20 @@ bool arma_especial(struct Juego *juego){
                 }
                 Celda *celda_alien = juego->t->celdas[coordenada_y][coordenada_x];
                 if(celda_alien && celda_alien->alien){
-                    celda_alien->dano_pend = celda_alien->dano_pend + 1;
+                    celda_alien->dano_pend = celda_alien->dano_pend + 2; // se marca el daño del alien
                 }
             }
         }
     }
     return impacto;
 }
-
-bool disparar_armas(struct Juego *juego, int arma_id){ //transformar el char a int
+/*
+* Nombre: disparar_armas
+* Parámetros: struct juego y int de id
+* Retorno: booleano
+* Descripción: revisa que el id del arma sea valido para despues asignarselo a FuncArmas, en caso de q no sea valido retorna false, de lo contrario true
+*/
+bool disparar_armas(struct Juego *juego, int arma_id){ //transformar el char a int en el main
     if(arma_id < 0 || arma_id > 2){
         return false;
     }

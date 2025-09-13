@@ -3,8 +3,12 @@
 #include <time.h>
 #include "main.h"
 #include "entidades.h"
-
-
+/*
+* Nombre: coordenada_spawn
+* Parámetros: struct Juego *juego
+* Retorno: retorna un entero
+* Descripción: determina una coordenada en x aleatoria entre las dispoibles para para spawnear el siguiente alien, en caso de que esten todas las casillas ocupadas retorna -1
+*/
 int coordenada_spawn(struct Juego *juego){ //determina una coordenada aleatoria donde spawneara el siguiente alien, en caso de que no haya espacio suficiente para que spawnee el alien retorna -1
     int y = juego->t->H - 1;
     int coordenadas_libres[juego->t->W];
@@ -25,6 +29,12 @@ int coordenada_spawn(struct Juego *juego){ //determina una coordenada aleatoria 
     return coordenada_x;
 }
 
+/*
+* Nombre:alien_a_spawnear
+* Parámetros: struct Juego
+* Retorno: un int con el id del tipo de alien a spawnear
+* Descripción: recibe el struct juego y determina aleatoriamente que tipo de alien spawneara en el siguiente turno, devuelve el id del alien
+*/
 int alien_a_spawnear(struct Juego *juego){ //determina aleatoriamente el tipo de alien que spawneara
     int probabilidad = rand() % 100;
     int tipo_alien;
@@ -35,10 +45,16 @@ int alien_a_spawnear(struct Juego *juego){ //determina aleatoriamente el tipo de
         tipo_alien = 2; //skater
     }
     else{
-        tipo_alien = 3;
+        tipo_alien = 3; //especial
     }
     return tipo_alien;
 }
+/*
+* Nombre: meter_alien
+* Parámetros: struct juego, y un entero con el tipo de alien que se quiere spawnear
+* Retorno: no retorna, es void
+* Descripción: recibe el struct juego y un entero con el id del alien que se quiere meter en el tablero, hace uso de la funcion coordenada_spawn para determinar en que coordenada colocar el alien y lo inicializa con la salud correspondiente dependiendo del id del alien, crea la memoria necesaria para insertar el alien y descuenta de la pool de aliens los generados
+*/
 void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien y lo inserta en la celda correspondiente
     int y = juego->t->H - 1;
     int x = coordenada_spawn(juego);
@@ -89,7 +105,12 @@ void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien y lo inse
     }
 }
 
-
+/*
+* Nombre: spawn_inicio
+* Parámetros: struct juego
+* Retorno: no retorna, es void
+* Descripción: recieb el struct juego  y spawnea los aliens iniciales dependiendo de la dificultad seleccionada en el menu de inicio, se apoya de las funciones alien_a_spawnear y de meter_alien para hacer el spawn, ademas inicializa las pools de aliens y las municiones de las armas
+*/
 void spawn_inicio(struct Juego *juego){
     int aliens_iniciales = 0;
     if(juego->dificultad == 1){ // facil
@@ -114,7 +135,7 @@ void spawn_inicio(struct Juego *juego){
         juego->pool.restantes = 20;
         juego->pool.especial = 0;
         juego->pool.aliens_randoms = 6;
-        juego->armas.ammo_especial = 1; //solo un especial en dificil, para q sea.... mas dificilxd
+        juego->armas.ammo_especial = 1; //solo un especial en dificil, para q sea mas dificil
         juego->armas.ammo_perforador = 7;
         while (aliens_iniciales < 3){
             int alienigena = alien_a_spawnear(juego);
@@ -123,6 +144,12 @@ void spawn_inicio(struct Juego *juego){
         }
     }
 }
+/*
+* Nombre:spawn_turno
+* Parámetros: struct Juego
+* Retorno: no retorna
+* Descripción: recibe el struct juego y revisa el inventario de los aliens para ver que alien puede spawnear en los siguienes turnos, ademas de esto spawnea los aliens utilizando las funciones alien_a_spawnear y coordenada_spawn
+*/
 void spawn_turno(Juego *juego){ //meter en el main un rand() para que si sale 30 y hay espacio se llame denuevo a spawn turno
     if(juego->vivos < juego->pool.vivos_tope){
         if(juego->vivos == juego->pool.restantes){

@@ -13,5 +13,5 @@ juego: $(OBJ)
 clean:
 	rm -f $(OBJ) juego
 
- run:
+run:
 	make all && ./juego
