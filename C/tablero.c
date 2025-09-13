@@ -28,23 +28,31 @@ Tablero* tablero_crear(int ancho, int alto){
 void tablero_cerrar(Tablero *tablero){
     for(int y = 0; y < tablero->H; y++){
         for(int x = 0; x < tablero->W; x++){
-            if(tablero->celdas[y][x] != NULL){
-                free(tablero->celdas[y][x]);
+            Celda *celda = tablero->celdas[y][x];
+            if(celda != NULL){
+                if(celda->alien != NULL){
+                    free(celda->alien);
+                    celda->alien = NULL;
+                }
+                free(celda);
+                tablero->celdas[y][x] = NULL;
             }
         }
-        if(tablero->celdas[y] != NULL){
-            free(tablero->celdas[y]);
-        }
+        free(tablero->celdas[y]);
+        tablero->celdas[y] = NULL;    
     }
     free(tablero->celdas);
+    tablero->celdas = NULL;
     free(tablero);
 }
+
+
 void limpiar_consola(){
     printf("\033[2J\033[H");
 }
 
 void tablero_imprimir(Juego *juego){
-    limpiar_consola();
+
     printf("=====================\n");
     for(int y = juego->t->H - 1; y >= 0; y--){ //se imprime al reves ya que de esa manera el spawn de aliens corresponde a y= H-1
         for(int x = 0; x < juego->t->W; x++){

@@ -40,11 +40,11 @@ int alien_a_spawnear(struct Juego *juego){ //determina aleatoriamente el tipo de
     return tipo_alien;
 }
 void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien y lo inserta en la celda correspondiente
-    /*if(juego->vivos >= juego->pool.vivos_tope){
-        break;
-    }*/ //colocar eso despues en el main
     int y = juego->t->H - 1;
     int x = coordenada_spawn(juego);
+    if(x == -1){
+        return;
+    }
     Alien *alienigena = malloc(sizeof (Alien));
     alienigena->tipo = tipo_alien;
     if (alienigena->tipo == 1){ // dron
@@ -72,13 +72,20 @@ void meter_alien(struct Juego *juego, int tipo_alien){ //crea el alien y lo inse
     juego->vivos++;
     //juego->pool.restantes--;
     if (tipo_alien == 1){
-        juego->pool.drone--;
+        if(juego->pool.drone > 0){
+            juego->pool.drone--;
+        }
+        
     }
     else if (tipo_alien == 2){
-        juego->pool.skater--;
+        if(juego->pool.skater > 0){
+            juego->pool.skater--;
+        } 
     }
     else if(tipo_alien == 3){
-        juego->pool.especial--;
+        if(juego->pool.especial > 0){
+            juego->pool.especial--;
+        } 
     }
 }
 
@@ -89,6 +96,7 @@ void spawn_inicio(struct Juego *juego){
         juego->pool.vivos_tope = 6;
         juego->pool.drone = 6;
         juego->pool.skater = 4;
+        juego->pool.especial = 0;
         juego->pool.restantes = 15; //aliens a derrotar para ganar el juego
         juego->pool.aliens_randoms = 5; //aliens de cualquier tipo
         juego->armas.ammo_especial = 3;
@@ -104,6 +112,7 @@ void spawn_inicio(struct Juego *juego){
         juego->pool.drone = 8;
         juego->pool.skater = 6;
         juego->pool.restantes = 20;
+        juego->pool.especial = 0;
         juego->pool.aliens_randoms = 6;
         juego->armas.ammo_especial = 1; //solo un especial en dificil, para q sea.... mas dificilxd
         juego->armas.ammo_perforador = 7;
@@ -116,20 +125,14 @@ void spawn_inicio(struct Juego *juego){
 }
 void spawn_turno(Juego *juego){ //meter en el main un rand() para que si sale 30 y hay espacio se llame denuevo a spawn turno
     if(juego->vivos < juego->pool.vivos_tope){
+        if(juego->vivos == juego->pool.restantes){
+            return;
+        }
         if(juego->pool.drone > 0  || juego->pool.skater > 0 || juego->pool.especial > 0 ){
             int tipo_alien_spawn = alien_a_spawnear(juego);
             int coordenada = coordenada_spawn(juego);
             if(coordenada != -1){
                 meter_alien(juego, tipo_alien_spawn);
-                if (tipo_alien_spawn == 1){
-                    juego->pool.drone  = juego->pool.drone - 1;
-                }
-                else if(tipo_alien_spawn == 2){
-                    juego->pool.skater = juego->pool.skater - 1;
-                }
-                else if(tipo_alien_spawn == 3){
-                    juego->pool.especial = juego->pool.especial - 1;
-                }
             }
         }
         else if(juego->pool.aliens_randoms > 0){
@@ -137,15 +140,6 @@ void spawn_turno(Juego *juego){ //meter en el main un rand() para que si sale 30
             int coordenada = coordenada_spawn(juego);
             if(coordenada != -1){
                 meter_alien(juego, tipo_alien_spawn);
-                if (tipo_alien_spawn == 1){
-                    juego->pool.aliens_randoms = juego->pool.aliens_randoms - 1;
-                }
-                else if(tipo_alien_spawn == 2){
-                    juego->pool.aliens_randoms = juego->pool.aliens_randoms - 1;
-                }
-                else if(tipo_alien_spawn == 3){
-                    juego->pool.aliens_randoms = juego->pool.aliens_randoms - 1;
-                }
             }
         }
     }

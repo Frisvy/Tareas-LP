@@ -25,11 +25,11 @@ bool validar_accion(struct Juego *juego, char accion){
                 validez = false;
             }
         }
-    }
-    else if(juego->dificultad == 2){
-        if((juego->jugador_x + 1) > 6){
-            printf("Accion invalida\n");
-            validez = false;
+        else if(juego->dificultad == 2){
+            if((juego->jugador_x + 1) > 6){
+                printf("Accion invalida\n");
+                validez = false;
+            }
         }
     }
     else if(accion == 'h'){
@@ -58,10 +58,14 @@ void ejecutar_accion(struct Juego *juego, char accion){
         juego->turno = juego->turno + 1;
     }
     else if(accion == 'h'){
-        printf("Mata a todos los aliens antes de que lleguen a la ultima casilla para ganar, recuerda los controles.\n");
-        printf("Controles: a/d mover | 1=NORMAL 2=PERFORADOR 3=ESPECIAL | q salir | help ayuda\n");
-        printf("¡Buena Suerte!\n");
-    } 
+    }
+    else if(accion == '1' || accion ==  '2' || accion == '3'){
+        int id = accion - '1';
+        bool disparo = disparar_armas(juego, id);
+        if(disparo){ // si no se pudo disparar el arma por q falto municion no se suma turno
+            juego->turno = juego->turno + 1; 
+        }
+    }
 }
 
 char accion; // variable global 
@@ -73,6 +77,7 @@ int main(){
     juego->continuar = true;
     int probabilidad;
     bool validez_accion;
+    juego->vivos = 0;
     do{
         menu_inicio(juego);
         if(juego->dificultad == 1){ //dificultad facil
@@ -88,7 +93,10 @@ int main(){
             printf("Selecciona una opcion valida papu :3\n");
         }
     } while ((juego->dificultad != 1) && (juego->dificultad != 2));
-    
+    juego->armas.fn[0] = arma_normal;
+    juego->armas.fn[1] = arma_perforador;
+    juego->armas.fn[2] = arma_especial;
+
     spawn_inicio(juego); //spawn de los primeros enemigos
     do{
         probabilidad = rand() % 100;
@@ -98,17 +106,29 @@ int main(){
         if(!validez_accion){
             continue;
         }
-        
-            
-            
-            
-            
+        int turno_anterior = juego->turno; //para ver si cambio el turno o no
+        ejecutar_accion(juego, accion);
+        if(juego->turno == turno_anterior){ 
+            continue;
         }
-        
-        
+        resolver_danos(juego);
+        if(juego->pool.restantes == 0){
+            printf("HAS MATADO A TODOS LOS ALIENS\n");
+            printf("FELICIDADES GANASTE\n");
+            break;
+        }
+        mover_aliens(juego);
+        spawn_turno(juego);
+        if(probabilidad <=30){
+            spawn_turno(juego);
+        }
+        if(!juego->continuar){
+            break;
+        }
     } while (accion != 'q');
-    
+    tablero_cerrar(juego->t);
+    free(juego);
     return 0;
 }
 //HACER Q LAS ACCIONES INVALIDAS NO CONSUMAN 
-//
+//sdadasd

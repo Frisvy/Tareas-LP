@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "main.h"
+#include "armas.h"
 
 
 bool arma_normal (struct Juego *juego){

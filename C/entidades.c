@@ -87,7 +87,9 @@ void resolver_danos(struct Juego *juego){
                     celda_alien->alien->hp = celda_alien->alien->hp - celda_alien->dano_pend;
                     celda_alien->dano_pend = 0;
                     if(celda_alien->alien->hp <= 0){
+                        free(celda_alien->alien);
                         celda_alien->alien = NULL;
+                        free(celda_alien);
                         celda_alien = NULL;
                         juego->t->celdas[y][x] = celda_alien;
                         juego->vivos = juego->vivos - 1;

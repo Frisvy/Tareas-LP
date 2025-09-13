@@ -8,5 +8,7 @@ Rol: 202473521-7
 
 3.- Respecto al arma especial. Esta funciona de tal manera que si impacta a un enemigo se expandira y golpeara todas las casillas adyacentes al alien (es decir un cuadrado de 3,3 si el alien esta en el centro)
 
+4.- La tarea sea compilo con gcc
 
+5.- sobre el makefile, "make run" compila todo y ejecuta el juego. "make clean" borra todos los object y el ejecutable
 
