@@ -1,5 +1,7 @@
 package player;
 
+
+
 public class Oxigeno{
     private int oxigenoRestante;
     private int capacidadMinima;
