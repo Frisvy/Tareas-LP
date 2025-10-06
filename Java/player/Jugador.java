@@ -46,6 +46,10 @@ public class Jugador implements AccesoProfundidad {
         return profundidadActual;
     }
 
+    public Oxigeno getTanqueOxigeno(){
+        return tanqueOxigeno;
+    }
+
     public void setZonaActual(Zona zona){
         if(this.puedeAcceder(profundidadActual)){
             this.zonaActual = zona;
@@ -68,7 +72,7 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("0) Salir");
     }
 
-    public boolean puedeAcceder(int zMax){ //revisar
+    public boolean puedeAcceder(int zMax){ //revisar correcta implementacion
         if(this.getProfundidadActual() >= zMax){
             return true;
         }

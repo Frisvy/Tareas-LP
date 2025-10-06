@@ -8,8 +8,7 @@ Rol: 202473521-7
 
 3.- Me reserve el derecho de eliminar opciones que salian en el ejemplo de ejecucion, mas especificamente la opcion de "5) Ver profundidad actual" y "6) Ver oxigeno restante", ya que me parecio mas oportuno integrarlo directamente en la interfaz de seleccion de opciones
 
-4.- 
-
+4.- utilizo double por que math.random devuelve double y asi me ahorro casteos
 
 
 

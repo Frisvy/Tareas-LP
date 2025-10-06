@@ -27,6 +27,11 @@ public class Main{
                 case "1" ->{
                     //System.out.print("\033[H\033[2J"); //para limpiar la pantalla tras cada elecccion
                     System.out.println("oli");
+                    jugador.getTanqueOxigeno().consumirO2(60);
+                }
+                case "4" ->{
+                    //validar si ta muelto o no
+                    jugador.getTanqueOxigeno().recargarCompleto();
                 }
             }
         }
