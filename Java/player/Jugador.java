@@ -7,7 +7,8 @@ import objetos.NaveExploradora;
 import objetos.Item;
 import objetos.AccesoProfundidad;
 
-public class Jugador{
+public class Jugador implements AccesoProfundidad {
+//---------------Atributos-----------------------
     private Oxigeno tanqueOxigeno;
     private List<Item> inventario;
     private Zona zonaActual; // solo se puede estar en una zona a la vez
@@ -17,7 +18,7 @@ public class Jugador{
     private boolean trajeTermico;
     private boolean mejoraTanque; 
 
-
+//---------------Constructores-----------------------
     public Jugador(Zona zonaInicial){
         this.tanqueOxigeno = new Oxigeno();
         this.inventario = new ArrayList<>();
@@ -40,23 +41,9 @@ public class Jugador{
         this.mejoraTanque = mejorarTanque;
     }
     
+//---------------Setters y Getters-----------------------    
     public int getProfundidadActual(){
         return profundidadActual;
-    }
-    
-    
-    public void verEstadoJugador(){
-        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): "  + this.profundidadActual + " m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
-        System.out.println("1) Subir o descender en profundidad (a nado)");
-        System.out.println("2) Explorar");
-        System.out.println("3) Recoger recursos");
-        System.out.println("4) Volver a la nave");
-        System.out.println("5) Ver profundidad actual");
-    }
-
-    public boolean puedeAcceder(int zMin){
-        if(this.getProfundidadActual() >= zMin){return true;}
-        return false;
     }
 
     public void setZonaActual(Zona zona){
@@ -67,4 +54,26 @@ public class Jugador{
             System.out.println("No se pudo acceder a la Zona";)
         }
     }
+
+//---------------Otros-------------------------
+
+    public void verEstadoJugador(){
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): "  + this.profundidadActual + " m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("1) Subir o descender en profundidad (a nado)");
+        System.out.println("2) Explorar");
+        System.out.println("3) Recoger recursos");
+        System.out.println("4) Volver a la nave");
+        System.out.println("5) Ver profundidad actual");
+        System.out.println("6) Ver inventario");
+        System.out.println("0) Salir");
+    }
+
+    public boolean puedeAcceder(int zMax){ //revisar
+        if(this.getProfundidadActual() >= zMax){
+            return true;
+        }
+        return false;
+    }
+
+
 }

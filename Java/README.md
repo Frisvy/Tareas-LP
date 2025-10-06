@@ -6,7 +6,9 @@ Rol: 202473521-7
 
 2.- la seleccion de "volver a la nave" no consumira oxigeno alguno, por lo cual por mas profundo que este el jugador volver a la nave siempre lo salvara de morir
 
-3.- 
+3.- Me reserve el derecho de eliminar opciones que salian en el ejemplo de ejecucion, mas especificamente la opcion de "5) Ver profundidad actual" y "6) Ver oxigeno restante", ya que me parecio mas oportuno integrarlo directamente en la interfaz de seleccion de opciones
+
+4.- 
 
 
 

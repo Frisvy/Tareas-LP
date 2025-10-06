@@ -21,8 +21,9 @@ public abstract class Zona{
     public String getNombre(){return nombre;}
     
     public void entrar(Jugador jugador){
-     
+        
     }
     
     public void explorar(Jugador jugador){}
+    
 }

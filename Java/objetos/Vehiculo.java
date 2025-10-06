@@ -9,5 +9,6 @@ public abstract class Vehiculo{
     public Vehiculo(){
         this.bodega = new ArrayList<>();
     }
-    public void transferirObjetos(){}
+    public void transferirObjetos(){} //Se permite que los estudiantes decidan qué argumentos debe contener el método ’void transferirObjetos(...) con libertad.
+
 }
