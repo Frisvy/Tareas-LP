@@ -1,20 +1,34 @@
 package player;
 
+import java.util.ArrayList;
 import java.util.List;
 import entorno.Zona;
 import objetos.NaveExploradora;
 import objetos.Item;
+import objetos.AccesoProfundidad;
 
 public class Jugador{
     private Oxigeno tanqueOxigeno;
     private List<Item> inventario;
-    private Zona zonaActual;
+    private Zona zonaActual; // solo se puede estar en una zona a la vez
     private int profundidadActual;
     private boolean tienePlanos;
     private NaveExploradora nave;
     private boolean trajeTermico;
-    private boolean mejoraTanque;
+    private boolean mejoraTanque; 
 
+
+    public Jugador(Zona zonaInicial){
+        this.tanqueOxigeno = new Oxigeno();
+        this.inventario = new ArrayList<>();
+        this.zonaActual = zonaInicial;
+        this.profundidadActual = 0;
+        this.tienePlanos = false;
+        this.nave = new NaveExploradora();
+        this.trajeTermico = false;
+        this.mejoraTanque = false;
+        
+    }
     public Jugador(Oxigeno tanqueOxigeno, List<Item> inventario, Zona zonaActual, int profundidadActual, boolean tienePlanos, NaveExploradora nave, boolean trajeTermico, boolean mejorarTanque){
         this.tanqueOxigeno = tanqueOxigeno;
         this.inventario = inventario;
@@ -25,5 +39,32 @@ public class Jugador{
         this.trajeTermico = trajeTermico;
         this.mejoraTanque = mejorarTanque;
     }
-    public void verEstadoJugador(){}
+    
+    public int getProfundidadActual(){
+        return profundidadActual;
+    }
+    
+    
+    public void verEstadoJugador(){
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): "  + this.profundidadActual + " m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("1) Subir o descender en profundidad (a nado)");
+        System.out.println("2) Explorar");
+        System.out.println("3) Recoger recursos");
+        System.out.println("4) Volver a la nave");
+        System.out.println("5) Ver profundidad actual");
+    }
+
+    public boolean puedeAcceder(int zMin){
+        if(this.getProfundidadActual() >= zMin){return true;}
+        return false;
+    }
+
+    public void setZonaActual(Zona zona){
+        if(this.puedeAcceder(profundidadActual)){
+            this.zonaActual = zona;
+        }
+        else{
+            System.out.println("No se pudo acceder a la Zona";)
+        }
+    }
 }
