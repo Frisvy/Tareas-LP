@@ -42,15 +42,12 @@ public class Jugador implements AccesoProfundidad {
     }
     
 //---------------Setters y Getters-----------------------    
-    public int getProfundidadActual(){
-        return profundidadActual;
-    }
-
-    public Oxigeno getTanqueOxigeno(){
-        return tanqueOxigeno;
-    }
-
-    public void setZonaActual(Zona zona){
+    public int getProfundidadActual(){return profundidadActual;}
+    public Oxigeno getTanqueOxigeno(){return tanqueOxigeno;}
+    public Zona getZonaActual(){return zonaActual;}
+    public List<Item> getInventario(){return inventario;}
+    
+    public void setZonaActual(Zona zona){ // revisar correcta implementacion junto a la interfaz
         if(this.puedeAcceder(profundidadActual)){
             this.zonaActual = zona;
         }
@@ -60,6 +57,8 @@ public class Jugador implements AccesoProfundidad {
     }
 
 //---------------Otros-------------------------
+    public void agregarAlInventario() //ayuda
+    
 
     public void verEstadoJugador(){
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): "  + this.profundidadActual + " m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());

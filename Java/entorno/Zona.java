@@ -11,38 +11,41 @@ public abstract class Zona{
     private int profundidadMin;
     private int profundidadMax;
     private EnumSet <ItemTipo> recursos;
+    private int nMinRecolectar;
+    private int nMaxRecolectar;
 //---------------Constructores-------------------
-    public Zona(String nombre, int profundidadMin, int profundidadMax){
+    public Zona(String nombre, int profundidadMin, int profundidadMax, int nMinRecolectar, int nMaxRecolectar){
         this.nombre = nombre;
         this.profundidadMin = profundidadMin;
         this.profundidadMax = profundidadMax;
+        this.recursos = EnumSet.noneOf(ItemTipo.class);
+        this.nMinRecolectar = nMinRecolectar;
+        this.nMaxRecolectar = nMaxRecolectar;
     }
 //---------------Setters y Getters---------------  
     public int getProfundidadMin(){return profundidadMin;}
     public int getProfundidadMax(){return profundidadMax;}
     public String getNombre(){return nombre;}
+    public EnumSet <ItemTipo> getRecursos(){return recursos;}
     
 //---------------Otros--------------------------- 
     public double profundidadNormalizada(Jugador jugador){ //utilice math.max para que la formula se vea igual que la de la tarea, y no usar condicionales por casos 
         double profundidadNormalizada = (jugador.getProfundidadActual() - profundidadMin)/Math.max(1.0,(double)(profundidadMax - profundidadMin));
         return profundidadNormalizada; // = d en la tarea
     }
+    
+    public int cantidadRecoleccionExplorar(Jugador jugador){
+        double d = this.profundidadNormalizada(jugador);
+        double nMin = (double)this.nMinRecolectar;
+        double cantidadMaxima = Math.max(1.0, Math.floor(nMin * d));
+        
+        return (int)cantidadMaxima;
+    }
 
     public void entrar(Jugador jugador){
         
     }
     
-    public void explorar(Jugador jugador){
-        //la primera parte se encarga del consumo del oxigeno
-        double profundidadNormalizada = profundidadNormalizada(jugador);
-        int oxigenoConsumido = (int)Math.ceil(profundidadNormalizada);
-        jugador.getTanqueOxigeno().consumirO2(oxigenoConsumido);
-
-        double probabilidad = Math.random(); // rango [0,1]
-        if(probabilidad < 0.3){
-            
-        }        
-
-    }
+    public abstract void explorar(Jugador jugador);
     
 }

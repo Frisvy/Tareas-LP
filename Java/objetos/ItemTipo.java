@@ -7,3 +7,4 @@ public enum ItemTipo{
         titanio, sulfuro, uranio, // zona volcanica
         PIEZA_TANQUE, PLANO_NAVE, MODULO_PROFUNDIDAD
     }
+    
