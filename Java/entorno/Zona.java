@@ -42,9 +42,7 @@ public abstract class Zona{
         return (int)cantidadMaxima;
     }
 
-    public void entrar(Jugador jugador){
-        
-    }
+    public void entrar(Jugador jugador){}
     
     public abstract void explorar(Jugador jugador);
     
