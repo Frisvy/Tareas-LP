@@ -10,6 +10,7 @@ Rol: 202473521-7
 
 4.- utilizo double por que math.random devuelve double y asi me ahorro casteos
 
+5.- me reserve el derecho de no comentar los setters y getters por que siento que se explican solos y harian el codigo mucho mas denso y dificil de revisar :3
 
 
 

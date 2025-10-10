@@ -13,6 +13,7 @@ public abstract class Zona{
     private EnumSet <ItemTipo> recursos;
     private int nMinRecolectar;
     private int nMaxRecolectar;
+    
 //---------------Constructores-------------------
     public Zona(String nombre, int profundidadMin, int profundidadMax, int nMinRecolectar, int nMaxRecolectar){
         this.nombre = nombre;

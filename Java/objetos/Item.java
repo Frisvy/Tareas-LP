@@ -11,6 +11,10 @@ public class Item{
         this.cantidad = cantidad;
     }
 //---------------Setters y Getters---------------
-    public int getCantidad(){return cantidad;}
     public ItemTipo getTipo(){return tipo;} 
+    public int getCantidad(){return cantidad;}
+    
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
+    }
 }

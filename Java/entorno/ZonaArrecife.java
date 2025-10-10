@@ -5,8 +5,10 @@ import player.Jugador;
 import java.util.Random;
 
 public class ZonaArrecife extends Zona{
+//---------------Atributos---------------------------
     private int piezasTanque;
 
+//---------------Constructores-----------------------
     public ZonaArrecife(){ 
         super("Zona Arrecife", 0, 199,1, 3);
         this.piezasTanque = 3; // 30% probabilidad de encontrar pieza al explorar
@@ -16,12 +18,14 @@ public class ZonaArrecife extends Zona{
         this.getRecursos().add(ItemTipo.PIEZA_TANQUE);
     }
 
+//---------------Setters y Getters-------------------     
     public int getPiezasTanque(){return piezasTanque;}
 
     public void obtenerPiezaTanque(){
         piezasTanque -= 1; 
     }
 
+//---------------Otros-------------------------------    
     public void explorar(Jugador jugador){
         //la primera parte se encarga del consumo del oxigeno
         double profundidadNormalizada = profundidadNormalizada(jugador);
@@ -30,19 +34,21 @@ public class ZonaArrecife extends Zona{
 
         double probabilidad = Math.random(); // rango [0,1]
         Random rng = new Random();
-        int recursoRandom = rng.nextInt(3);
+        int recursoRandom = rng.nextInt(3); // numero entre [0,2]
         if(probabilidad < 0.3 && this.piezasTanque > 0 ){
             this.obtenerPiezaTanque();
+            jugador.agregarAlInventario(ItemTipo.PIEZA_TANQUE, 1);
         }
-        else{ // calcular la cantidad de recursos que se obtienen al explorar y no encontrar nada, añadir en el inventario del jugador la cantidad, no en la zona XD
+        else{ // calcular la cantidad de recursos que se obtienen al explorar y no encontrar nada
             if(recursoRandom == 0){ // cuarzo
-                jugador.getInventario().getCantidad //ayuda
+                jugador.agregarAlInventario(ItemTipo.cuarzo, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
             }
-            else if(recursoRandom == 1){
+            else if(recursoRandom == 1){//silicio
+                jugador.agregarAlInventario(ItemTipo.silicio, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
 
             }
-            else if(recursoRandom == 2){
-
+            else if(recursoRandom == 2){ //cobre
+                jugador.agregarAlInventario(ItemTipo.cobre, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
             }
         }        
 

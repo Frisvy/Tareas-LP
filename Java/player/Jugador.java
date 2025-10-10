@@ -6,6 +6,7 @@ import entorno.Zona;
 import objetos.NaveExploradora;
 import objetos.Item;
 import objetos.AccesoProfundidad;
+import objetos.ItemTipo;
 
 public class Jugador implements AccesoProfundidad {
 //---------------Atributos-----------------------
@@ -21,7 +22,7 @@ public class Jugador implements AccesoProfundidad {
 //---------------Constructores-----------------------
     public Jugador(Zona zonaInicial){
         this.tanqueOxigeno = new Oxigeno();
-        this.inventario = new ArrayList<>();
+        this.inventario = new ArrayList<Item>();
         this.zonaActual = zonaInicial;
         this.profundidadActual = 0;
         this.tienePlanos = false;
@@ -57,7 +58,17 @@ public class Jugador implements AccesoProfundidad {
     }
 
 //---------------Otros-------------------------
-    public void agregarAlInventario() //ayuda
+    public void agregarAlInventario(ItemTipo tipo, int cantidad){
+        if(cantidad > 0){
+            for(Item elemento : inventario){
+                if(elemento.getTipo() == tipo){
+                    elemento.setCantidad(cantidad + elemento.getCantidad());
+                    return; //para que en caso de que si exista el elemento nos saltemos la linea de abajo y no tengamos repetidos en la lista
+                }
+            }
+            inventario.add(new Item(tipo, cantidad)); //en caso de que no tengamos ninguna unidad del itme en el inventario
+        }
+    }
     
 
     public void verEstadoJugador(){
