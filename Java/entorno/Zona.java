@@ -6,7 +6,7 @@ import objetos.ItemTipo;
 import static java.lang.Math.max;
 
 public abstract class Zona{
-//---------------Atributos-----------------------        
+//---------------Atributos-----------------------    
     public String nombre;
     private int profundidadMin;
     private int profundidadMax;

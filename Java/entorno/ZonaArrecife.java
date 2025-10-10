@@ -7,7 +7,7 @@ import java.util.Random;
 public class ZonaArrecife extends Zona{
     private int piezasTanque;
 
-    public ZonaArrecife(){
+    public ZonaArrecife(){ 
         super("Zona Arrecife", 0, 199,1, 3);
         this.piezasTanque = 3; // 30% probabilidad de encontrar pieza al explorar
         this.getRecursos().add(ItemTipo.cuarzo);
@@ -34,9 +34,15 @@ public class ZonaArrecife extends Zona{
         if(probabilidad < 0.3 && this.piezasTanque > 0 ){
             this.obtenerPiezaTanque();
         }
-        else{ // calcular la cantidad de recursos que se obtienen al explorar y no encontrar nada 
-            if(recursoRandom == 0){
-                jugador. //ayuda
+        else{ // calcular la cantidad de recursos que se obtienen al explorar y no encontrar nada, añadir en el inventario del jugador la cantidad, no en la zona XD
+            if(recursoRandom == 0){ // cuarzo
+                jugador.getInventario().getCantidad //ayuda
+            }
+            else if(recursoRandom == 1){
+
+            }
+            else if(recursoRandom == 2){
+
             }
         }        
 
