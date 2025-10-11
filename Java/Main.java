@@ -29,6 +29,9 @@ public class Main{
                     System.out.println("oli");
                     jugador.getTanqueOxigeno().consumirO2(60);
                 }
+                case "2" ->{
+                    jugador.getZonaActual().explorar(jugador);
+                }
                 case "4" ->{
                     //validar si ta muelto o no
                     jugador.getTanqueOxigeno().recargarCompleto();

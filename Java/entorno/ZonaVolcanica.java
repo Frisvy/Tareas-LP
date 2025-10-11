@@ -35,20 +35,27 @@ public class ZonaVolcanica extends Zona{
         double probabilidad = Math.random(); //rango [0,1]
         Random rng = new Random();
         int recursoRandom = rng.nextInt(3); // numero entre [0,2]
-        if(probabilidad < 0.15 && this.planoEncontrado){
+        if(probabilidad < 0.15 && !this.planoEncontrado){
             this.encontrarPlano();
             jugador.agregarAlInventario(ItemTipo.PLANO_NAVE, 1);
+            System.out.println("Se a encontrado un plano para una nave");
         }
         else{
             if(recursoRandom == 0){ //titanio
-                jugador.agregarAlInventario(ItemTipo.titanio, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+                int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+                jugador.agregarAlInventario(ItemTipo.titanio, cantidadItem);
+                System.out.println("Se a obtenido " + cantidadItem + " de titanio");
             }
             else if(recursoRandom == 1){//sulfuro
-                jugador.agregarAlInventario(ItemTipo.sulfuro, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+                int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+                jugador.agregarAlInventario(ItemTipo.sulfuro, cantidadItem);
+                System.out.println("Se a obtenido " + cantidadItem + " de sulfuro");
 
             }
             else if(recursoRandom == 2){ //uranio
-                jugador.agregarAlInventario(ItemTipo.uranio, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+                int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+                jugador.agregarAlInventario(ItemTipo.uranio, cantidadItem);
+                System.out.println("Se a obtenido " + cantidadItem + " de uranio");
             }
 
         }

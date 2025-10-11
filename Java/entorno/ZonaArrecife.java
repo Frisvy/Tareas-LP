@@ -31,6 +31,7 @@ public class ZonaArrecife extends Zona{
         double profundidadNormalizada = profundidadNormalizada(jugador);
         double calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada); //no hay presion asi que no sumamos nada mas
         jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno); // restamos el oxigeno del jugador
+        System.out.println("Se consumio " + (int)calculoOxigeno +" de O2" );
 
         double probabilidad = Math.random(); // rango [0,1]
         Random rng = new Random();
@@ -38,17 +39,24 @@ public class ZonaArrecife extends Zona{
         if(probabilidad < 0.3 && this.piezasTanque > 0 ){
             this.obtenerPiezaTanque();
             jugador.agregarAlInventario(ItemTipo.PIEZA_TANQUE, 1);
+            System.out.println("Se a obtenido una Pieza de tanque");
         }
         else{ // calcular la cantidad de recursos que se obtienen al explorar y no encontrar nada
             if(recursoRandom == 0){ // cuarzo
-                jugador.agregarAlInventario(ItemTipo.cuarzo, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+                int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+                jugador.agregarAlInventario(ItemTipo.cuarzo, cantidadItem);
+                System.out.println("Se a obtenido " + cantidadItem + " de cuarzo");
             }
             else if(recursoRandom == 1){//silicio
-                jugador.agregarAlInventario(ItemTipo.silicio, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+                int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+                jugador.agregarAlInventario(ItemTipo.silicio, cantidadItem);
+                System.out.println("Se a obtenido " + cantidadItem + " de silicio");
 
             }
             else if(recursoRandom == 2){ //cobre
-                jugador.agregarAlInventario(ItemTipo.cobre, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+                int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+                jugador.agregarAlInventario(ItemTipo.cobre, cantidadItem);
+                System.out.println("Se a obtenido " + cantidadItem + " de cobre");
             }
         }        
 

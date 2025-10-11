@@ -53,7 +53,7 @@ public class Jugador implements AccesoProfundidad {
             this.zonaActual = zona;
         }
         else{
-            System.out.println("No se pudo acceder a la Zona";)
+            System.out.println("No se pudo acceder a la Zona");
         }
     }
 

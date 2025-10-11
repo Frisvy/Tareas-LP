@@ -37,19 +37,29 @@ public class ZonaProfunda extends Zona{
         Random rng = new Random();
         int recursoRandom = rng.nextInt(5); // numero entre [0,4]
         if(recursoRandom == 0){ //plata
-            jugador.agregarAlInventario(ItemTipo.plata, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+            int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+            jugador.agregarAlInventario(ItemTipo.plata, cantidadItem);
+            System.out.println("Se a obtenido " + cantidadItem + " de plata");
         }
         else if(recursoRandom == 1){//oro
-            jugador.agregarAlInventario(ItemTipo.oro, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+            int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+            jugador.agregarAlInventario(ItemTipo.oro, cantidadItem);
+            System.out.println("Se a obtenido " + cantidadItem + " de oro");
         }
         else if(recursoRandom == 2){//acero
-            jugador.agregarAlInventario(ItemTipo.acero, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+            int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+            jugador.agregarAlInventario(ItemTipo.acero, cantidadItem);
+            System.out.println("Se a obtenido " + cantidadItem + " de acero");
         }
         else if(recursoRandom == 3){//diamante
-            jugador.agregarAlInventario(ItemTipo.diamante, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+            int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+            jugador.agregarAlInventario(ItemTipo.diamante, cantidadItem);
+            System.out.println("Se a obtenido " + cantidadItem + " de diamante");
         }
         else if(recursoRandom == 4){//magnetita
-            jugador.agregarAlInventario(ItemTipo.magnetita, jugador.getZonaActual().cantidadRecoleccionExplorar(jugador));
+            int cantidadItem = jugador.getZonaActual().cantidadRecoleccionExplorar(jugador);
+            jugador.agregarAlInventario(ItemTipo.magnetita, cantidadItem);
+            System.out.println("Se a obtenido " + cantidadItem + " de magnetita");
         }
     }    
 }
