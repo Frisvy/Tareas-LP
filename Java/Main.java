@@ -26,8 +26,10 @@ public class Main{
                 }
                 case "1" ->{
                     //System.out.print("\033[H\033[2J"); //para limpiar la pantalla tras cada elecccion
-                    System.out.println("oli");
-                    jugador.getTanqueOxigeno().consumirO2(60);
+                    System.out.println("Seleccione la profundidad de destino (Rango Zona = [" + jugador.getZonaActual().getProfundidadMin() + " - " + jugador.getZonaActual().getProfundidadMax() + "]): " );
+                    String profundidadSeleccionada = scanner.nextLine();
+                    int profundidadDestino = Integer.parseInt(profundidadSeleccionada);
+                    jugador.subirDescender(profundidadDestino);
                 }
                 case "2" ->{
                     jugador.getZonaActual().explorar(jugador);

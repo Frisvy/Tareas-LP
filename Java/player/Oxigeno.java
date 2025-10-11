@@ -22,6 +22,7 @@ public class Oxigeno{
 //---------------Otros---------------------------  
     public void consumirO2(int unidades){
         this.oxigenoRestante = oxigenoRestante - unidades;
+        System.out.println("Se comsumio " + unidades + " de O2");
         if(this.oxigenoRestante <= 0){
             System.out.println("muelto");
             this.oxigenoRestante = 0;

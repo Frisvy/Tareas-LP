@@ -31,7 +31,6 @@ public class ZonaArrecife extends Zona{
         double profundidadNormalizada = profundidadNormalizada(jugador);
         double calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada); //no hay presion asi que no sumamos nada mas
         jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno); // restamos el oxigeno del jugador
-        System.out.println("Se consumio " + (int)calculoOxigeno +" de O2" );
 
         double probabilidad = Math.random(); // rango [0,1]
         Random rng = new Random();

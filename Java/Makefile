@@ -1,7 +1,7 @@
 .PHONY: all compile run clean
 BIN := bin
 SOURCES := $(shell find . -name "*.java" -not -path "./$(BIN)/*")
-MAIN := Main   # cambia si tu Main tiene package (p.ej. app.Main)
+MAIN := Main 
 
 all: compile
 

@@ -47,6 +47,7 @@ public class Jugador implements AccesoProfundidad {
     public Oxigeno getTanqueOxigeno(){return tanqueOxigeno;}
     public Zona getZonaActual(){return zonaActual;}
     public List<Item> getInventario(){return inventario;}
+    public NaveExploradora getNave(){return nave;}
     
     public void setZonaActual(Zona zona){ // revisar correcta implementacion junto a la interfaz
         if(this.puedeAcceder(profundidadActual)){
@@ -69,10 +70,9 @@ public class Jugador implements AccesoProfundidad {
             inventario.add(new Item(tipo, cantidad)); //en caso de que no tengamos ninguna unidad del itme en el inventario
         }
     }
-    
-
+  
     public void verEstadoJugador(){
-        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): "  + this.profundidadActual + " m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
         System.out.println("1) Subir o descender en profundidad (a nado)");
         System.out.println("2) Explorar");
         System.out.println("3) Recoger recursos");
@@ -81,6 +81,35 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("6) Ver inventario");
         System.out.println("0) Salir");
     }
+
+    public int oxigenoMoverJugador(int nuevaProfundidad){
+        double profundidadNormalizada = this.zonaActual.profundidadNormalizada(this);
+        double deltaZ = Math.abs(this.profundidadActual - nuevaProfundidad);
+        double calculoOxigeno = Math.ceil((3+(3*profundidadNormalizada))*(deltaZ/50));
+
+        return (int)calculoOxigeno;
+    }
+
+    public void subirDescender(int nuevaProfundidad){  //actualiza profundidad actual y consume oxigeno
+        if(nuevaProfundidad > this.getZonaActual().getProfundidadMax()){//si intenta cambiar de zona a nado lo dejamos en la profundidad maxima permitida pa q se vaya a la nave el jugador
+            System.out.println("Para cambiar de zona vuelve a la nave");
+            int costeOxigeno = this.oxigenoMoverJugador(this.getZonaActual().getProfundidadMax());
+            this.getTanqueOxigeno().consumirO2(costeOxigeno);
+            this.profundidadActual = this.getZonaActual().getProfundidadMax();
+            return;
+        }
+        else if(nuevaProfundidad < this.getZonaActual().getProfundidadMin()){
+            System.out.println("Para cambiar de zona vuelve a la nave");
+            int costeOxigeno = this.oxigenoMoverJugador(this.getZonaActual().getProfundidadMin());
+            this.getTanqueOxigeno().consumirO2(costeOxigeno);
+            this.profundidadActual = this.getZonaActual().getProfundidadMin();
+            return;
+        }
+        int costeOxigeno = this.oxigenoMoverJugador(nuevaProfundidad);
+        this.getTanqueOxigeno().consumirO2(costeOxigeno);
+        this.profundidadActual = nuevaProfundidad;
+    }
+
 
     public boolean puedeAcceder(int zMax){ //revisar correcta implementacion
         if(this.getProfundidadActual() >= zMax){
