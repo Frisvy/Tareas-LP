@@ -31,7 +31,13 @@ public class ZonaProfunda extends Zona{
     public void explorar(Jugador jugador){
         //la primera parte se encarga del consumo del oxigeno
         double profundidadNormalizada = profundidadNormalizada(jugador);
-        double calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada + calculoPresion(jugador)); //aqui hay presion asi que la sumamos al calculo
+        double calculoOxigeno;
+        if(jugador.getMejoraTanque()){
+            calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada); //si el tanque esta mejorado no sumamos la presion
+        }
+        else{
+            calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada + calculoPresion(jugador)); //aqui hay presion asi que la sumamos al calculo
+        }
         jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno);
 
         Random rng = new Random();

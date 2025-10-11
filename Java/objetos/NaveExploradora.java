@@ -14,5 +14,6 @@ public class NaveExploradora extends Vehiculo{
 
 //---------------Setters y Getters-------------------
     public int getProfundidadAnclaje(){return profundidadAnclaje;}
+    public void setProfundidadAnclaje(int nuevoAnclaje){this.profundidadAnclaje = nuevoAnclaje;}
 
 }

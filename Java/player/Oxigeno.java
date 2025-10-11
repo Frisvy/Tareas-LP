@@ -31,5 +31,6 @@ public class Oxigeno{
     
     public void recargarCompleto(){
         this.oxigenoRestante = capacidadMaxima;
+        System.out.println("Se a restablecido el O2");
     }
 }

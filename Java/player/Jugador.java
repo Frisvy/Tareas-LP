@@ -48,13 +48,16 @@ public class Jugador implements AccesoProfundidad {
     public Zona getZonaActual(){return zonaActual;}
     public List<Item> getInventario(){return inventario;}
     public NaveExploradora getNave(){return nave;}
+    public boolean getTienePlanos(){return tienePlanos;}
+    public boolean getTrajeTermico(){return trajeTermico;}
+    public boolean getMejoraTanque(){return mejoraTanque;}
     
     public void setZonaActual(Zona zona){ // revisar correcta implementacion junto a la interfaz
-        if(this.puedeAcceder(profundidadActual)){
+        if(this.puedeAcceder(zona.getProfundidadMin())){
             this.zonaActual = zona;
         }
         else{
-            System.out.println("No se pudo acceder a la Zona");
+            System.out.println("No se pudo acceder a la Zona, faltan mejoras clave");
         }
     }
 
@@ -80,6 +83,23 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("5) Ver profundidad actual");
         System.out.println("6) Ver inventario");
         System.out.println("0) Salir");
+    }
+
+    public void verMenuNave(){
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("1) Ajustar anclaje de nave");
+        System.out.println("2) Guardar TODOS los objetos del jugador en la nave");
+        System.out.println("3) Crear objetos");
+        System.out.println("4) Moverse a otra Zona");
+        System.out.println("5) Ver inventario de la nave");
+        System.out.println("0) Salir de la nave");
+    }
+    public void verMenuZonas(){
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("1) Zona Arrecife");
+        System.out.println("2) Zona Profunda");
+        System.out.println("3) Zona Volcanica");
+        System.out.println("4) Nave Estrellada");
     }
 
     public int oxigenoMoverJugador(int nuevaProfundidad){
@@ -111,11 +131,11 @@ public class Jugador implements AccesoProfundidad {
     }
 
 
-    public boolean puedeAcceder(int zMax){ //revisar correcta implementacion
-        if(this.getProfundidadActual() >= zMax){
-            return true;
+    public boolean puedeAcceder(int requerido){ //profundidad minima de la nueva zona
+        if(requerido >= 1000){ //para entrar a la zona volcanica
+            return mejoraTanque && trajeTermico; // si no hay traje y tanque retorna false, si estan va a ser true
         }
-        return false;
+        return true;
     }
 
 

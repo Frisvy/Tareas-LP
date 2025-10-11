@@ -19,6 +19,7 @@ public class Main{
             System.out.println("==== Subnautica ====");
             jugador.verEstadoJugador();
             String eleccion = scanner.nextLine();
+            boolean menuNave = true;
 
             switch(eleccion){
                 case "0" ->{
@@ -34,13 +35,47 @@ public class Main{
                 case "2" ->{
                     jugador.getZonaActual().explorar(jugador);
                 }
-                case "4" ->{
+                case "4" ->{//volver a la nave
                     //validar si ta muelto o no
+                    System.out.println("Has entrado en la nave");
                     jugador.getTanqueOxigeno().recargarCompleto();
+                    while(menuNave){
+                        jugador.verMenuNave();
+                        String eleeccionMenuNave = scanner.nextLine();
+
+                        switch(eleeccionMenuNave){
+                            case "0" ->{
+                                menuNave = false;
+                            }
+                            case "4" -> {
+                                jugador.verMenuZonas();
+                                String eleccionZonaNueva = scanner.nextLine();
+                                switch(eleccionZonaNueva){
+                                    case "1" ->{
+                                        jugador.setZonaActual(arrecife);
+                                        jugador.getNave().setProfundidadAnclaje(0);
+                                    }
+                                    case "2" ->{
+                                        jugador.setZonaActual(profunda);
+                                        jugador.getNave().setProfundidadAnclaje(200);
+                                    }
+                                    case "3" ->{
+                                        jugador.setZonaActual(volcanica);
+                                        if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){ // si se pudo acceder seteamos el anclaje, de lo contrario lo dejamos igual
+                                            jugador.getNave().setProfundidadAnclaje(1000);
+                                        }
+                                    }
+                                    case "4" ->{
+                                        jugador.setZonaActual(estrellada);
+                                        jugador.getNave().setProfundidadAnclaje(0);
+                                    }
+                                }
+                            }    
+                        }
+                    }
                 }
             }
         }
-
     }
 
 }
