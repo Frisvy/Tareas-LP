@@ -1,5 +1,7 @@
 package objetos;
 
+import player.Jugador;
+
 public class NaveExploradora extends Vehiculo implements AccesoProfundidad{
 //---------------Atributos---------------------------    
     private int profundidadSoportada;

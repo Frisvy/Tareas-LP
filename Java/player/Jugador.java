@@ -76,6 +76,13 @@ public class Jugador implements AccesoProfundidad {
             inventario.add(new Item(tipo, cantidad)); //en caso de que no tengamos ninguna unidad del itme en el inventario
         }
     }
+
+    public void vaciarInventario(){
+        if(inventario != null){
+            inventario.clear();
+            System.out.println("Se a vaciado el inventario del jugador");
+        }
+    }
   
     public void verEstadoJugador(){
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
@@ -105,6 +112,7 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("5) Crear robot");
         System.out.println("6) Mejorar capacidad de carga (Robot)");
         System.out.println("7) Reparar robot");
+        System.out.println("8) Reparar Nave estrellada");
     }
 
     public void verMenuZonas(){
@@ -185,6 +193,12 @@ public class Jugador implements AccesoProfundidad {
         this.profundidadActual = nuevaProfundidad;
     }
 
+    public void derrotado(){
+        this.vaciarInventario();
+        this.profundidadActual = this.getNave().getProfundidadAnclaje();
+        System.out.println("Has quedado inconsciente, volviste a la nave y perdiste todo tu inventario");
+        this.getTanqueOxigeno().recargarCompleto();
+    }
 
     public boolean puedeAcceder(int requerido){ //profundidad minima de la nueva zona
         if(requerido >= 1000){ //para entrar a la zona volcanica

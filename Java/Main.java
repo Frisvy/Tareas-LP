@@ -16,6 +16,9 @@ public class Main{
         Scanner scanner = new Scanner(System.in); //pedir accion al jugador
         boolean continuar = true; // para mantener el bucle  principal
         while(continuar){
+            if(jugador.getTanqueOxigeno().getOxigenoRestante() == 0){ //si el jugador llega a 0 de O2 queda inconciente y pierde el oxigeno
+                jugador.derrotado();
+            }
             System.out.println("==== Subnautica ====");
             jugador.verEstadoJugador();
             String eleccion = scanner.nextLine();
@@ -112,14 +115,17 @@ public class Main{
                             case "0" ->{
                                 menuNave = false;
                             }
-                            case "3" ->{
+                            case "2" ->{
+                                jugador.getNave().transferirObjetos(jugador);
+                            }
+                            case "3" ->{//creacion
                                 jugador.verMenuCreacion();
                                 String eleccionMenuCreacion = scanner.nextLine();
                                 switch(eleccionMenuCreacion){
                                     //terminar esta wea
                                 }
                             }
-                            case "4" -> {
+                            case "4" -> { //cambio de zona 
                                 jugador.verMenuZonas();
                                 String eleccionZonaNueva = scanner.nextLine();
                                 switch(eleccionZonaNueva){

@@ -14,6 +14,7 @@ Rol: 202473521-7
 
 6.- para simplificar calculos de oxigeno, el cambio de zona se implemento de tal manera que tengas que volver a la nave para realizar la accion de cambiar de zona, por lo cual si se intenta cambiar de zona a nado se imprimira un mensaje indicando que se debe volver a la nave y se seteara la profundidad actual en la maxima permitida en la zona (El coordinador menciono en el foro que esta opcion es totalmente valida y que no se evaluara el cambio de zona a nado)
 
+7.- en cuanto a la condicion de derrota, en caso de que se quede inconsciente el jugador, perdera el inventario y reaparecera en la profundidad de anclaje de la nave (eso es lo que entendi por devolver al jugador a la nave)
 
 
 
