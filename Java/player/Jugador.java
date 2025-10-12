@@ -83,8 +83,7 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("2) Explorar");
         System.out.println("3) Recoger recursos");
         System.out.println("4) Volver a la nave");
-        System.out.println("5) Ver profundidad actual");
-        System.out.println("6) Ver inventario");
+        System.out.println("5) Ver inventario");
         System.out.println("0) Salir");
     }
 
@@ -97,6 +96,17 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("5) Ver inventario de la nave");
         System.out.println("0) Salir de la nave");
     }
+    public void verMenuCreacion(){
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("1) Mejora de tanque");
+        System.out.println("2) Mejora de oxigeno");
+        System.out.println("3) Traje termico");
+        System.out.println("4) Instalar Modulo de profundidad");
+        System.out.println("5) Crear robot");
+        System.out.println("6) Mejorar capacidad de carga (Robot)");
+        System.out.println("7) Reparar robot");
+    }
+
     public void verMenuZonas(){
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
         System.out.println("1) Zona Arrecife");
@@ -130,6 +140,20 @@ public class Jugador implements AccesoProfundidad {
             System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
             System.out.println("1) Cables");
             System.out.println("2) Piezas de metal");
+        }
+    }
+
+
+
+    public void verInventarioJugador(){
+        System.out.println("----Inventario Jugador----");
+        if(inventario.isEmpty()){
+            System.out.println("No tienes nada en el inventario");
+        }
+        for(Item objeto : inventario){
+            if(objeto.getCantidad() > 0){
+                System.out.println(objeto.getCantidad() +" de " + objeto.getTipo());
+            }
         }
     }
 

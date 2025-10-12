@@ -84,13 +84,13 @@ public class Main{
                                 menuRecolectar = false;
                             }
                             case "4" ->{ 
-                                if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
+                                if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.diamante);
                                 }
                                 menuRecolectar = false;
                             }
                             case "5" ->{
-                                if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
+                                if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.magnetita);
                                 }
                                 menuRecolectar = false;
@@ -111,6 +111,13 @@ public class Main{
                         switch(eleeccionMenuNave){
                             case "0" ->{
                                 menuNave = false;
+                            }
+                            case "3" ->{
+                                jugador.verMenuCreacion();
+                                String eleccionMenuCreacion = scanner.nextLine();
+                                switch(eleccionMenuCreacion){
+                                    //terminar esta wea
+                                }
                             }
                             case "4" -> {
                                 jugador.verMenuZonas();
@@ -136,8 +143,14 @@ public class Main{
                                     }
                                 }
                             }
+                            case "5" ->{
+                                jugador.getNave().verInventarioNave();
+                            }
                         }
                     }
+                }
+                case "5" ->{
+                    jugador.verInventarioJugador();
                 }
             }
         }
