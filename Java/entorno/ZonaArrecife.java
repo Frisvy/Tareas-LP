@@ -58,6 +58,15 @@ public class ZonaArrecife extends Zona{
                 System.out.println("Se a obtenido " + cantidadItem + " de cobre");
             }
         }        
+    }
 
+    public void recolectar(Jugador jugador, ItemTipo recurso){
+        double profundidadNormalizada = profundidadNormalizada(jugador);
+        double calculoOxigeno = Math.ceil(10 + 6*profundidadNormalizada); //no sumamos presion y redondeamos hacia arriba
+        jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno);
+
+        int cantidadRecoleccion = produccionPorRecolectar(jugador);
+        jugador.agregarAlInventario(recurso, cantidadRecoleccion);
+        System.out.println("Se a obtenido " + cantidadRecoleccion + " de " + recurso);
     }
 }

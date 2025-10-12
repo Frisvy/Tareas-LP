@@ -2,6 +2,7 @@ package entorno;
 
 import java.util.EnumSet;
 import player.Jugador;
+import objetos.Item;
 import objetos.ItemTipo;
 import static java.lang.Math.max;
 
@@ -43,8 +44,25 @@ public abstract class Zona{
         return (int)cantidadMaxima;
     }
 
-    public void entrar(Jugador jugador){}
+    public int produccionPorRecolectar(Jugador jugador){
+        double d = this.profundidadNormalizada(jugador);
+        double nMin = (double)this.nMinRecolectar;
+        double nMax = (double)this.nMaxRecolectar;
+        double cantidadMaxima = Math.max(1.0,Math.floor(nMin + ((nMax - nMin) * d)));
+
+        return (int)cantidadMaxima;
+    }
+
+
+    public void entrar(Jugador jugador){
+        Zona zonaAnterior = jugador.getZonaActual();
+        jugador.setZonaActual(this);
+        if(jugador.getZonaActual() != zonaAnterior){
+            jugador.setProfundidadActual(this.getProfundidadMin());
+        }
+    }
     
     public abstract void explorar(Jugador jugador);
+    public abstract void recolectar(Jugador jugador, ItemTipo recurso);
     
 }

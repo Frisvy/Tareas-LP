@@ -52,9 +52,16 @@ public class NaveEstrellada extends Zona{
                 jugador.agregarAlInventario(ItemTipo.piezas_de_metal, cantidadItem);
                 System.out.println("Se han obtenido " + cantidadItem + " piezas de metal");
             }
-
-        }
-        
+        } 
     }
+    public void recolectar(Jugador jugador, ItemTipo recurso){
+        double profundidadNormalizada = profundidadNormalizada(jugador);
+        double calculoOxigeno = Math.ceil(10 + 6*profundidadNormalizada); //no sumamos presion y redondeamos hacia arriba
+        jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno);
+
+        int cantidadRecoleccion = produccionPorRecolectar(jugador);
+        jugador.agregarAlInventario(recurso, cantidadRecoleccion);
+        System.out.println("Se a obtenido " + cantidadRecoleccion + " de " + recurso);
+    } 
 
 }

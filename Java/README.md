@@ -22,12 +22,16 @@ Rol: 202473521-7
 
 
 
+
+
+
 -------------INSTRUCCIONES DE EJECUCION--------------------------------------
 
 
 
 Por implemetnar:
-    1) recolectar
-    2) cambio de zona (interfaz)
+    1) recolectar 
+    2) cambio de zona (interfaz) //revisar implementacion en naveexploradora
     3) inventario traspaso de objetos
     4) aplicar mejoras de modulos y eso 
+    5) configurar anclaje

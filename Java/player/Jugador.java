@@ -51,6 +51,9 @@ public class Jugador implements AccesoProfundidad {
     public boolean getTienePlanos(){return tienePlanos;}
     public boolean getTrajeTermico(){return trajeTermico;}
     public boolean getMejoraTanque(){return mejoraTanque;}
+    public void setProfundidadActual(int nuevaProfundidad){
+        this.profundidadActual = nuevaProfundidad;
+    }
     
     public void setZonaActual(Zona zona){ // revisar correcta implementacion junto a la interfaz
         if(this.puedeAcceder(zona.getProfundidadMin())){
@@ -100,6 +103,34 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("2) Zona Profunda");
         System.out.println("3) Zona Volcanica");
         System.out.println("4) Nave Estrellada");
+    }
+
+    public void verMenuRecolectar(Jugador jugador){
+        if(jugador.getZonaActual().getNombre() == "Zona Arrecife"){
+            System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+            System.out.println("1) Cuarzo");
+            System.out.println("2) Silicio");
+            System.out.println("3) Cobre");
+        }
+        else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
+            System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+            System.out.println("1) Plata");
+            System.out.println("2) Oro");
+            System.out.println("3) Acero");
+            System.out.println("4) Diamante");
+            System.out.println("5) Magnetita");
+        }
+        else if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
+            System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+            System.out.println("1) Titanio");
+            System.out.println("2) Sulfuro");
+            System.out.println("3) Uranio");
+        }
+        else if(jugador.getZonaActual().getNombre() == "Nave Estrellada"){
+            System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+            System.out.println("1) Cables");
+            System.out.println("2) Piezas de metal");
+        }
     }
 
     public int oxigenoMoverJugador(int nuevaProfundidad){

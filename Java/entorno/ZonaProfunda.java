@@ -68,4 +68,19 @@ public class ZonaProfunda extends Zona{
             System.out.println("Se a obtenido " + cantidadItem + " de magnetita");
         }
     }    
+    public void recolectar(Jugador jugador, ItemTipo recurso){
+        double profundidadNormalizada = profundidadNormalizada(jugador);
+        double calculoOxigeno;
+        if(jugador.getMejoraTanque()){
+            calculoOxigeno = Math.ceil(12 + 6*profundidadNormalizada); //si el tanque esta mejorado no sumamos la presion
+        }
+        else{
+            calculoOxigeno = Math.ceil(12 + 6*profundidadNormalizada + calculoPresion(jugador)); //aqui hay presion asi que la sumamos al calculo
+        }        
+        jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno);
+
+        int cantidadRecoleccion = produccionPorRecolectar(jugador);
+        jugador.agregarAlInventario(recurso, cantidadRecoleccion);
+        System.out.println("Se a obtenido " + cantidadRecoleccion + " de " + recurso);
+    }
 }

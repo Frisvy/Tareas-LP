@@ -20,21 +20,86 @@ public class Main{
             jugador.verEstadoJugador();
             String eleccion = scanner.nextLine();
             boolean menuNave = true;
+            boolean menuRecolectar = true;
 
             switch(eleccion){
                 case "0" ->{
                     continuar = false;
                 }
-                case "1" ->{
+                case "1" ->{ //subir o bajar en profundidad
                     //System.out.print("\033[H\033[2J"); //para limpiar la pantalla tras cada elecccion
                     System.out.println("Seleccione la profundidad de destino (Rango Zona = [" + jugador.getZonaActual().getProfundidadMin() + " - " + jugador.getZonaActual().getProfundidadMax() + "]): " );
                     String profundidadSeleccionada = scanner.nextLine();
                     int profundidadDestino = Integer.parseInt(profundidadSeleccionada);
                     jugador.subirDescender(profundidadDestino);
                 }
-                case "2" ->{
+                case "2" ->{ //explorar
                     jugador.getZonaActual().explorar(jugador);
                 }
+                case "3" ->{ //recolectar
+                    while(menuRecolectar){
+                        jugador.verMenuRecolectar(jugador);
+                        String eleccionRecolectar = scanner.nextLine();
+                        switch(eleccionRecolectar){
+                            case "1" ->{
+                                if(jugador.getZonaActual().getNombre() == "Zona Arrecife"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.cuarzo);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.plata);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Zona Volacanica"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.titanio);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Nave Estrellada"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.cables);
+                                }
+                                menuRecolectar = false;
+                            }
+                            case "2" ->{
+                                if(jugador.getZonaActual().getNombre() == "Zona Arrecife"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.silicio);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.oro);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Zona Volacanica"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.sulfuro);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Nave Estrellada"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.piezas_de_metal);
+                                }
+                                menuRecolectar = false;
+                            }
+                            case "3" ->{
+                                if(jugador.getZonaActual().getNombre() == "Zona Arrecife"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.cobre);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.acero);
+                                }
+                                else if(jugador.getZonaActual().getNombre() == "Zona Volacanica"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.uranio);
+                                }
+                                menuRecolectar = false;
+                            }
+                            case "4" ->{ 
+                                if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.diamante);
+                                }
+                                menuRecolectar = false;
+                            }
+                            case "5" ->{
+                                if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
+                                    jugador.getZonaActual().recolectar(jugador,ItemTipo.magnetita);
+                                }
+                                menuRecolectar = false;
+                            }
+                        }
+
+                    }
+
+                } 
                 case "4" ->{//volver a la nave
                     //validar si ta muelto o no
                     System.out.println("Has entrado en la nave");
@@ -52,25 +117,25 @@ public class Main{
                                 String eleccionZonaNueva = scanner.nextLine();
                                 switch(eleccionZonaNueva){
                                     case "1" ->{
-                                        jugador.setZonaActual(arrecife);
+                                        arrecife.entrar(jugador);
                                         jugador.getNave().setProfundidadAnclaje(0);
                                     }
                                     case "2" ->{
-                                        jugador.setZonaActual(profunda);
+                                        profunda.entrar(jugador);
                                         jugador.getNave().setProfundidadAnclaje(200);
                                     }
                                     case "3" ->{
-                                        jugador.setZonaActual(volcanica);
+                                        volcanica.entrar(jugador);
                                         if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){ // si se pudo acceder seteamos el anclaje, de lo contrario lo dejamos igual
                                             jugador.getNave().setProfundidadAnclaje(1000);
                                         }
                                     }
                                     case "4" ->{
-                                        jugador.setZonaActual(estrellada);
+                                        estrellada.entrar(jugador);
                                         jugador.getNave().setProfundidadAnclaje(0);
                                     }
                                 }
-                            }    
+                            }
                         }
                     }
                 }
