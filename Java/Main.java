@@ -122,7 +122,16 @@ public class Main{
                                 jugador.verMenuCreacion();
                                 String eleccionMenuCreacion = scanner.nextLine();
                                 switch(eleccionMenuCreacion){
-                                    //terminar esta wea
+                                    case "1" ->{
+                                        jugador.mejorarTanque();
+                                        System.out.println("tanquedemierda" + jugador.getMejoraTanque());
+                                    }
+                                    case "2" ->{
+                                        jugador.mejorarOxigeno();
+                                    }
+                                    case "3" ->{
+                                        
+                                    }
                                 }
                             }
                             case "4" -> { //cambio de zona 

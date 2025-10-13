@@ -83,6 +83,53 @@ public class Jugador implements AccesoProfundidad {
             System.out.println("Se a vaciado el inventario del jugador");
         }
     }
+
+    public void consumirItem(ItemTipo tipo, int cantidad){
+        for(Item elemento : this.getNave().getBodega()){
+            if(elemento.getTipo() == tipo){
+                if(elemento.getCantidad() >= cantidad){
+                    elemento.setCantidad(elemento.getCantidad() - cantidad);
+                    return; //se desconto el elemento
+                }
+            }
+        }
+        System.out.println("No tienes suficiente " + tipo);
+    }
+    public void mejorarTanque(){
+        for(Item elemento : this.getNave().getBodega()){
+            if(elemento.getTipo() == ItemTipo.PIEZA_TANQUE){
+                if(elemento.getCantidad() == 3){
+                    this.mejoraTanque = true; //la presion ya no debe afectar
+                    this.consumirItem(ItemTipo.PIEZA_TANQUE, 3);
+                    System.out.println("Tanque mejorado");
+                    this.getTanqueOxigeno().aplicarMejoraTanque(); //aumento de capacidad
+                    this.getTanqueOxigeno().recargarCompleto();//recarga del tanque a 120
+                    return;
+                }
+            }
+        }
+        this.consumirItem(ItemTipo.PIEZA_TANQUE, 3);
+    }
+    public void mejorarOxigeno(){
+        int cantidadPlata = 0;
+        int cantidadCuarzo = 0;
+        for(Item elemento : this.getNave().getBodega()){
+            if(elemento.getTipo() == ItemTipo.plata){
+                cantidadPlata = elemento.getCantidad();
+            }
+            if(elemento.getTipo() == ItemTipo.cuarzo){
+                cantidadCuarzo = elemento.getCantidad();
+            }
+        }
+        if(cantidadPlata >= 10 && cantidadCuarzo >= 15){
+            this.consumirItem(ItemTipo.plata, 10);
+            this.consumirItem(ItemTipo.cuarzo, 15);
+            this.getTanqueOxigeno().aplicarMejoraOxigeno();
+            System.out.println("Se mejoro en 30 el oxigeno");
+            return;
+        }
+        System.out.println("No tienes suficientes recursos para aplicar la mejora");
+    }
   
     public void verEstadoJugador(){
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());

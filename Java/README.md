@@ -16,6 +16,7 @@ Rol: 202473521-7
 
 7.- en cuanto a la condicion de derrota, en caso de que se quede inconsciente el jugador, perdera el inventario y reaparecera en la profundidad de anclaje de la nave (eso es lo que entendi por devolver al jugador a la nave)
 
+8.- entiendo que las mejoras de oxigeno pueden ser infinitas tras mejorar el tanque de oxigeno, añaidendo 30 mas de oxigeno por mejora de este
 
 
 

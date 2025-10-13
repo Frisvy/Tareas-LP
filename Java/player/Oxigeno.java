@@ -15,9 +15,7 @@ public class Oxigeno{
     }
 
 //---------------Setters y Getters---------------     
-    public int getOxigenoRestante(){
-        return oxigenoRestante;
-    }
+    public int getOxigenoRestante(){return oxigenoRestante;}
 
 //---------------Otros---------------------------  
     public void consumirO2(int unidades){
@@ -32,5 +30,13 @@ public class Oxigeno{
     public void recargarCompleto(){
         this.oxigenoRestante = capacidadMaxima;
         System.out.println("Se a restablecido el O2");
+    }
+
+    public void aplicarMejoraTanque(){
+        this.capacidadMaxima = capacidadMaxima*2;
+    }
+    public void aplicarMejoraOxigeno(){
+        this.capacidadMaxima = capacidadMaxima + 30;
+        this.recargarCompleto();
     }
 }
