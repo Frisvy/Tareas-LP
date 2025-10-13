@@ -130,7 +130,7 @@ public class Main{
                                         jugador.mejorarOxigeno();
                                     }
                                     case "3" ->{
-                                        
+                                        jugador.crearTrajeTermico();
                                     }
                                 }
                             }
@@ -168,7 +168,7 @@ public class Main{
                     jugador.verInventarioJugador();
                 }
             }
+            System.out.println("=========================");
         }
     }
-
 }

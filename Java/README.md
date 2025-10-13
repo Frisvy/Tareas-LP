@@ -32,8 +32,7 @@ Rol: 202473521-7
 
 
 Por implemetnar:
-    1) recolectar //listo, revisar bien eso si
     2) cambio de zona (interfaz) //revisar implementacion en naveexploradora
-    3) inventario traspaso de objetos
     4) aplicar mejoras de modulos y eso 
     5) configurar anclaje
+    6) hacer funcional la mejora del traje termico y hacer q te mueras y eso

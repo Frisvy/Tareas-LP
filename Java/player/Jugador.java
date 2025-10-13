@@ -54,7 +54,6 @@ public class Jugador implements AccesoProfundidad {
     public void setProfundidadActual(int nuevaProfundidad){
         this.profundidadActual = nuevaProfundidad;
     }
-    
     public void setZonaActual(Zona zona){ // revisar correcta implementacion junto a la interfaz
         if(this.puedeAcceder(zona.getProfundidadMin())){
             this.zonaActual = zona;
@@ -130,9 +129,35 @@ public class Jugador implements AccesoProfundidad {
         }
         System.out.println("No tienes suficientes recursos para aplicar la mejora");
     }
+
+    public void crearTrajeTermico(){
+        int cantidadSilicio = 0;
+        int cantidadOro = 0;
+        int cantidadCuarzo = 0;
+        for(Item elemento : this.getNave().getBodega()){
+            if(elemento.getTipo() == ItemTipo.silicio){
+                cantidadSilicio = elemento.getCantidad();
+            }
+            if(elemento.getTipo() == ItemTipo.oro){
+                cantidadOro = elemento.getCantidad();
+            }
+            if(elemento.getTipo() == ItemTipo.cuarzo){
+                cantidadCuarzo = elemento.getCantidad();
+            }
+        }
+        if(cantidadSilicio >= 10 && cantidadCuarzo >= 5 && cantidadOro >= 3){
+            this.consumirItem(ItemTipo.silicio, 10);
+            this.consumirItem(ItemTipo.cuarzo, 5);
+            this.consumirItem(ItemTipo.oro, 3);
+            this.trajeTermico = true;
+            System.out.println("Se creo el traje termico");
+            return;
+        }
+        System.out.println("Faltan recursos para crear el traje termico");
+    }   
   
     public void verEstadoJugador(){
-        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante() + " | Traje Termico: " + getTrajeTermico() + " | Mejora Tanque: " + getMejoraTanque() );
         System.out.println("1) Subir o descender en profundidad (a nado)");
         System.out.println("2) Explorar");
         System.out.println("3) Recoger recursos");
@@ -159,7 +184,7 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("5) Crear robot");
         System.out.println("6) Mejorar capacidad de carga (Robot)");
         System.out.println("7) Reparar robot");
-        System.out.println("8) Reparar Nave estrellada");
+        System.out.println("8) Reparar Nave estrellada"); //se debe estar en nave estrellada
     }
 
     public void verMenuZonas(){
