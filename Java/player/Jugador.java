@@ -64,7 +64,16 @@ public class Jugador implements AccesoProfundidad {
     }
 
 //---------------Otros-------------------------
-    public void agregarAlInventario(ItemTipo tipo, int cantidad){
+    public boolean puedeAcceder(int requerido){ //profundidad minima de la nueva zona
+        if(requerido >= 1000){ //para entrar a la zona volcanica
+            return mejoraTanque && trajeTermico && nave.getModuloInstalado(); // si no hay traje, tanque y modulo profundidad retorna false, si estan va a ser true
+        }
+        return true;
+    }    
+
+
+
+public void agregarAlInventario(ItemTipo tipo, int cantidad){
         if(cantidad > 0){
             for(Item elemento : inventario){
                 if(elemento.getTipo() == tipo){
@@ -77,10 +86,28 @@ public class Jugador implements AccesoProfundidad {
     }
 
     public void vaciarInventario(){
+        int cantidadModuloProfundidad = 0;
+        int cantidadPiezaTanque = 0;
+        int cantidadPlanoNave = 0;
+        //en caso de que hayan objetos clave guardamos la cantidad para que no se borren si el jugador se desmaya y asi no arruinar la progresion del juego
+        for(Item elemento : inventario){
+            if(elemento.getTipo() == ItemTipo.MODULO_PROFUNDIDAD){
+                cantidadModuloProfundidad = elemento.getCantidad();
+            }
+            else if(elemento.getTipo() == ItemTipo.PIEZA_TANQUE){
+                cantidadPiezaTanque = elemento.getCantidad();
+            }
+            else if(elemento.getTipo() == ItemTipo.PLANO_NAVE){
+                cantidadPlanoNave = elemento.getCantidad();
+            }
+        }
         if(inventario != null){
             inventario.clear();
             System.out.println("Se a vaciado el inventario del jugador");
         }
+        this.agregarAlInventario(ItemTipo.MODULO_PROFUNDIDAD, cantidadModuloProfundidad);
+        this.agregarAlInventario(ItemTipo.PIEZA_TANQUE, cantidadPiezaTanque);
+        this.agregarAlInventario(ItemTipo.PLANO_NAVE, cantidadPlanoNave);
     }
 
     public void consumirItem(ItemTipo tipo, int cantidad){
@@ -155,9 +182,26 @@ public class Jugador implements AccesoProfundidad {
         }
         System.out.println("Faltan recursos para crear el traje termico");
     }   
-  
+
+    public void instalarModuloProfundidad(){
+        int cantidadModuloProfundidad = 0;
+        for(Item elemento : this.getNave().getBodega()){
+            if(elemento.getTipo() == ItemTipo.MODULO_PROFUNDIDAD){
+                cantidadModuloProfundidad = elemento.getCantidad();
+            }
+        }
+        if(cantidadModuloProfundidad >= 1){
+            this.consumirItem(ItemTipo.MODULO_PROFUNDIDAD, 1);
+            this.getNave().instalarModuloProfundidad();
+            System.out.println("Se instalo el modulo profundidad");
+            return;
+        }
+        System.out.println("Necesitas encontrar el modulo profundidad y depositarlo en la bodega para poder instalarlo");
+    }
+
     public void verEstadoJugador(){
-        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante() + " | Traje Termico: " + getTrajeTermico() + " | Mejora Tanque: " + getMejoraTanque() );
+        System.out.println("==== Subnautica ====");
+        System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante() + " | Traje Termico: " + getTrajeTermico() + " | Mejora Tanque: " + getMejoraTanque() + " | Modulo Profundidad: " + this.getNave().getModuloInstalado());
         System.out.println("1) Subir o descender en profundidad (a nado)");
         System.out.println("2) Explorar");
         System.out.println("3) Recoger recursos");
@@ -167,6 +211,8 @@ public class Jugador implements AccesoProfundidad {
     }
 
     public void verMenuNave(){
+        this.setProfundidadActual(this.getNave().getProfundidadAnclaje());
+        System.out.println("==== Subnautica ====");
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
         System.out.println("1) Ajustar anclaje de nave");
         System.out.println("2) Guardar TODOS los objetos del jugador en la nave");
@@ -176,6 +222,7 @@ public class Jugador implements AccesoProfundidad {
         System.out.println("0) Salir de la nave");
     }
     public void verMenuCreacion(){
+        System.out.println("==== Subnautica ====");
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
         System.out.println("1) Mejora de tanque");
         System.out.println("2) Mejora de oxigeno");
@@ -188,6 +235,7 @@ public class Jugador implements AccesoProfundidad {
     }
 
     public void verMenuZonas(){
+        System.out.println("==== Subnautica ====");
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
         System.out.println("1) Zona Arrecife");
         System.out.println("2) Zona Profunda");
@@ -196,6 +244,7 @@ public class Jugador implements AccesoProfundidad {
     }
 
     public void verMenuRecolectar(Jugador jugador){
+        System.out.println("==== Subnautica ====");
         if(jugador.getZonaActual().getNombre() == "Zona Arrecife"){
             System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
             System.out.println("1) Cuarzo");
@@ -272,12 +321,7 @@ public class Jugador implements AccesoProfundidad {
         this.getTanqueOxigeno().recargarCompleto();
     }
 
-    public boolean puedeAcceder(int requerido){ //profundidad minima de la nueva zona
-        if(requerido >= 1000){ //para entrar a la zona volcanica
-            return mejoraTanque && trajeTermico; // si no hay traje y tanque retorna false, si estan va a ser true
-        }
-        return true;
-    }
+
 
 
 }

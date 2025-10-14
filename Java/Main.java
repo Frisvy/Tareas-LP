@@ -19,18 +19,16 @@ public class Main{
             if(jugador.getTanqueOxigeno().getOxigenoRestante() == 0){ //si el jugador llega a 0 de O2 queda inconciente y pierde el oxigeno
                 jugador.derrotado();
             }
-            System.out.println("==== Subnautica ====");
             jugador.verEstadoJugador();
             String eleccion = scanner.nextLine();
             boolean menuNave = true;
             boolean menuRecolectar = true;
-
             switch(eleccion){
+                
                 case "0" ->{
                     continuar = false;
                 }
                 case "1" ->{ //subir o bajar en profundidad
-                    //System.out.print("\033[H\033[2J"); //para limpiar la pantalla tras cada elecccion
                     System.out.println("Seleccione la profundidad de destino (Rango Zona = [" + jugador.getZonaActual().getProfundidadMin() + " - " + jugador.getZonaActual().getProfundidadMax() + "]): " );
                     String profundidadSeleccionada = scanner.nextLine();
                     int profundidadDestino = Integer.parseInt(profundidadSeleccionada);
@@ -115,6 +113,12 @@ public class Main{
                             case "0" ->{
                                 menuNave = false;
                             }
+                            case "1" ->{
+                                System.out.println("Seleccione la profundidad de destino (Rango Zona = [" + jugador.getZonaActual().getProfundidadMin() + " - " + jugador.getZonaActual().getProfundidadMax() + "]): " );
+                                String profundidadSeleccionadaAnclaje = scanner.nextLine();
+                                int profundidadDestinoAnclaje = Integer.parseInt(profundidadSeleccionadaAnclaje);
+                                jugador.getNave().fijarAnclaje(profundidadDestinoAnclaje, jugador);
+                            }
                             case "2" ->{
                                 jugador.getNave().transferirObjetos(jugador);
                             }
@@ -131,6 +135,9 @@ public class Main{
                                     }
                                     case "3" ->{
                                         jugador.crearTrajeTermico();
+                                    }
+                                    case "4" ->{
+                                        jugador.instalarModuloProfundidad();
                                     }
                                 }
                             }
@@ -168,7 +175,6 @@ public class Main{
                     jugador.verInventarioJugador();
                 }
             }
-            System.out.println("=========================");
         }
     }
 }
