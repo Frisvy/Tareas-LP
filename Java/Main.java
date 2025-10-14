@@ -49,7 +49,7 @@ public class Main{
                                 else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.plata);
                                 }
-                                else if(jugador.getZonaActual().getNombre() == "Zona Volacanica"){
+                                else if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.titanio);
                                 }
                                 else if(jugador.getZonaActual().getNombre() == "Nave Estrellada"){
@@ -64,7 +64,7 @@ public class Main{
                                 else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.oro);
                                 }
-                                else if(jugador.getZonaActual().getNombre() == "Zona Volacanica"){
+                                else if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.sulfuro);
                                 }
                                 else if(jugador.getZonaActual().getNombre() == "Nave Estrellada"){
@@ -79,7 +79,7 @@ public class Main{
                                 else if(jugador.getZonaActual().getNombre() == "Zona Profunda"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.acero);
                                 }
-                                else if(jugador.getZonaActual().getNombre() == "Zona Volacanica"){
+                                else if(jugador.getZonaActual().getNombre() == "Zona Volcanica"){
                                     jugador.getZonaActual().recolectar(jugador,ItemTipo.uranio);
                                 }
                                 menuRecolectar = false;
