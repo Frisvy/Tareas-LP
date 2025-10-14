@@ -4,6 +4,8 @@ import objetos.ItemTipo;
 import player.Jugador;
 import java.util.Random;
 
+//SEGUN EL PDF DE LA TAREA LAS ACCIONES NO CONSUMEN O2 EN ESTA ZONA
+
 public class NaveEstrellada extends Zona{
 //---------------Atributos---------------------------
     private boolean moduloEncontrado;
@@ -30,7 +32,6 @@ public class NaveEstrellada extends Zona{
         //consumo de oxigeno
         double profundidadNormalizada = profundidadNormalizada(jugador);
         double calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada); //no hay presion
-        jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno);
 
         //calculo rng items 
         double probabilidad = Math.random(); // rango [0,1]
@@ -57,7 +58,7 @@ public class NaveEstrellada extends Zona{
     public void recolectar(Jugador jugador, ItemTipo recurso){
         double profundidadNormalizada = profundidadNormalizada(jugador);
         double calculoOxigeno = Math.ceil(10 + 6*profundidadNormalizada); //no sumamos presion y redondeamos hacia arriba
-        jugador.getTanqueOxigeno().consumirO2((int)calculoOxigeno);
+
 
         int cantidadRecoleccion = produccionPorRecolectar(jugador);
         jugador.agregarAlInventario(recurso, cantidadRecoleccion);

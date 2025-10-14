@@ -20,7 +20,7 @@ Rol: 202473521-7
 
 9.- no se especifica explicitamente en el enunciado de la tarea, pero asumi que el acceso a la zona volcanica esta limitado tambien por el modulo profundidad y no solo por el traje termico y la mejora del tanque, ya que al final esta a mas de 500 de profundidad la zona, lo que implica que la nave no soportaria la profundidad de la zona 
 
-
+10.- El pdf de la tarea no especifica nada acerca de la cantidad de recursos que otorgan las acciones de explorar y recolectar en Nave Estrellada, menciono esto debido que no se da una formula especial para la zona, y dado que sale definido que el nMax debe ser 4 y el nMin 1, como la formula de recursos a obtener implica el utilizar la profundidad normalizada, esta ultima siempre sera 0 ya que nave estrellada esta en la superficie, por lo cual las acciones ya mencionadas siempre daran 1 solo recurso como maximo aun siguiendo al pie de la letra las formulas. Lo menciono para que se tenga en cuenta en la revision, ya que me parece un detalle importante
 
 
 
