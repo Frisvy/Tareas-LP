@@ -12,27 +12,31 @@ public class NaveEstrellada extends Zona{
 
 //---------------Constructores-----------------------
     public NaveEstrellada(){
-        super("Nave Estrellada", 0, 0, 1, 4);
+        super("Nave Estrellada", 0, 0, 1, 4,ItemTipo.cables, ItemTipo.piezas_de_metal, ItemTipo.MODULO_PROFUNDIDAD);
         this.moduloEncontrado = false;
-        this.getRecursos().add(ItemTipo.cables);
-        this.getRecursos().add(ItemTipo.piezas_de_metal);
-        this.getRecursos().add(ItemTipo.MODULO_PROFUNDIDAD);
     }
 
 //---------------Setters y Getters-------------------  
     public boolean getModuloEncontrado(){return moduloEncontrado;}    
 
 //---------------Otros------------------------------- 
+    /*
+    * Nombre: encontrarModulo 
+    * Descripción: sete la variable de moduloEncontrado a true
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void encontrarModulo(){
         this.moduloEncontrado = true;
     }
 
-
+    /*
+    * Nombre: explorar
+    * Descripción: determina el rng de los diversos items de la zona, ademas de consumir el oxigeno y la cantidad de los recursos correspondiente a la accion segun las formulas del pdf,
+    * @param Parámetro(s): variable del jugador
+    * @return: no retoran, es void
+    */
     public void explorar(Jugador jugador){
-        //consumo de oxigeno
-        double profundidadNormalizada = profundidadNormalizada(jugador);
-        double calculoOxigeno = Math.ceil(12 + 10*profundidadNormalizada); //no hay presion
-
         //calculo rng items 
         double probabilidad = Math.random(); // rango [0,1]
         Random rng = new Random();
@@ -55,11 +59,14 @@ public class NaveEstrellada extends Zona{
             }
         } 
     }
+
+    /*
+    * Nombre: recolectar
+    * Descripción: realiza la accion de recolectar, la cual añade cierta cantidad de recursos al inventario del jugador
+    * @param Parámetro(s): variable del jugador y variable ItemTipo con el tipo de recurso a recolectar
+    * @return: no retoran, es void
+    */
     public void recolectar(Jugador jugador, ItemTipo recurso){
-        double profundidadNormalizada = profundidadNormalizada(jugador);
-        double calculoOxigeno = Math.ceil(10 + 6*profundidadNormalizada); //no sumamos presion y redondeamos hacia arriba
-
-
         int cantidadRecoleccion = produccionPorRecolectar(jugador);
         jugador.agregarAlInventario(recurso, cantidadRecoleccion);
         System.out.println("Se a obtenido " + cantidadRecoleccion + " de " + recurso);

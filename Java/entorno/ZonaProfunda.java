@@ -10,24 +10,32 @@ public class ZonaProfunda extends Zona{
 
 //---------------Constructores-------------------
     public ZonaProfunda(){
-        super("Zona Profunda", 200, 999, 2,6);
+        super("Zona Profunda", 200, 999, 2,6, ItemTipo.plata, ItemTipo.oro, ItemTipo.acero, ItemTipo.diamante, ItemTipo.magnetita);
         this.presion = 10;
-        this.getRecursos().add(ItemTipo.plata);
-        this.getRecursos().add(ItemTipo.oro);
-        this.getRecursos().add(ItemTipo.acero);
-        this.getRecursos().add(ItemTipo.diamante);
-        this.getRecursos().add(ItemTipo.magnetita);
     }
 
 //---------------Setters y Getters---------------
     public int getPresion(){return presion;}
 
 //---------------Otros---------------------------
+    
+    /*
+    * Nombre: calculoPresion
+    * Descripción: calcula las unidades de oxigeno que consume la presion segun las formulas del pdf de la tarea
+    * @param Parámetro(s): variable del jugador
+    * @return: no retoran, es void
+    */
     public double calculoPresion(Jugador jugador){ //solo si mejoraTanque = false, explorar
         double presionFormula = this.presion + 6*profundidadNormalizada(jugador); //this.presion es la presion que decia la tarea que utilicemos, en vez de poner 10 
         return presionFormula;
     }
 
+    /*
+    * Nombre: explorar
+    * Descripción: calcula la cantidad de oxigeno que se consume dependiendo de si el jugador tiene o no activado el tanque de oxigeno, ademas define probabilidades aleatorias para para la generacion del recurso aleatorio segun las formulsa del pdf
+    * @param Parámetro(s): variable del jugador
+    * @return: no retoran, es void
+    */
     public void explorar(Jugador jugador){
         //la primera parte se encarga del consumo del oxigeno
         double profundidadNormalizada = profundidadNormalizada(jugador);
@@ -67,7 +75,14 @@ public class ZonaProfunda extends Zona{
             jugador.agregarAlInventario(ItemTipo.magnetita, cantidadItem);
             System.out.println("Se a obtenido " + cantidadItem + " de magnetita");
         }
-    }    
+    }
+    
+    /*
+    * Nombre: recolectar
+    * Descripción: realiza la accion de recolectar consumiendo el oxigeno correcpondiente a la accion, el cual varia segun las mejoras de el jugador, y utiliza el metodo de produccionPorRecolectar, el cual permite determinar cuanto del recurso a recolectar vamos a conseguir
+    * @param Parámetro(s): variable del jugador, y variable del tipo ItemTipo con el tipo de recurso que se quiere recolectar
+    * @return: no retoran, es void
+    */
     public void recolectar(Jugador jugador, ItemTipo recurso){
         double profundidadNormalizada = profundidadNormalizada(jugador);
         double calculoOxigeno;

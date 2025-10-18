@@ -105,7 +105,12 @@ public class Main{
                     //validar si ta muelto o no
                     System.out.println("Has entrado en la nave");
                     jugador.getTanqueOxigeno().recargarCompleto();
-                    while(menuNave){
+                    while(menuNave){// menu de la nave
+                        if(jugador.getVictoria()){//si el jugador ya gano (reparo la nave) nos salimos de todos los bucles
+                            menuNave = false;
+                            continuar = false;
+                            continue;
+                        }
                         jugador.verMenuNave();
                         String eleeccionMenuNave = scanner.nextLine();
 
@@ -127,8 +132,12 @@ public class Main{
                                 String eleccionMenuCreacion = scanner.nextLine();
                                 switch(eleccionMenuCreacion){
                                     case "1" ->{
-                                        jugador.mejorarTanque();
-                                        System.out.println("tanquedemierda" + jugador.getMejoraTanque());
+                                        if(!jugador.getMejoraTanque()){
+                                            jugador.mejorarTanque();
+                                        }
+                                        else{
+                                            System.out.println("El tanque ya esta mejorado");
+                                        }
                                     }
                                     case "2" ->{
                                         jugador.mejorarOxigeno();
@@ -138,6 +147,15 @@ public class Main{
                                     }
                                     case "4" ->{
                                         jugador.instalarModuloProfundidad();
+                                    }
+                                    case "8" ->{
+                                        jugador.agregarAlInventario(ItemTipo.PLANO_NAVE, 1);
+                                        jugador.encontrarPlanos();
+                                        jugador.agregarAlInventario(ItemTipo.titanio, 50);
+                                        jugador.agregarAlInventario(ItemTipo.acero, 30);
+                                        jugador.agregarAlInventario(ItemTipo.uranio, 15);
+                                        jugador.agregarAlInventario(ItemTipo.sulfuro, 20);
+                                        jugador.repararNaveEstrellada();
                                     }
                                 }
                             }
@@ -176,5 +194,9 @@ public class Main{
                 }
             }
         }
+        if(jugador.getVictoria()){
+            System.out.println("Te vas volando en la nave ");
+        }
+        scanner.close();
     }
 }

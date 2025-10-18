@@ -18,6 +18,12 @@ public abstract class Vehiculo{
     public List<Item> getBodega(){return bodega;}
 
 //---------------Otros-------------------------------
+    /*
+    * Nombre: agregarItemsBodega
+    * Descripción: recibe un item y una cantidad para agregarla a la bodega de la nave
+    * @param Parámetro(s): variable ItemTipo con el tipo del item y int con la cantidad a agregar
+    * @return: no retoran, es void
+    */
     public void agregarItemsBodega(ItemTipo tipo, int cantidad){
         if(cantidad > 0){
             for(Item elemento : bodega){
@@ -30,8 +36,13 @@ public abstract class Vehiculo{
         }
     }
 
-
-public void transferirObjetos(Jugador jugador){ //se transfieren los elementos del jugador a la bodega
+    /*
+    * Nombre: trasnferirObjetos
+    * Descripción: transfiere los objetos del inventario del jugador a la bodega de la nave. Una vez transferidos todos los objetos se procede a vaciar el inventario del jugador
+    * @param Parámetro(s): variable de tipo Jugador (osea el jugador jeje)
+    * @return: no retoran, es void
+    */
+    public void transferirObjetos(Jugador jugador){ //se transfieren los elementos del jugador a la bodega
         for(Item elemento : jugador.getInventario()){
             agregarItemsBodega(elemento.getTipo(), elemento.getCantidad());
         }

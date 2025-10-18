@@ -18,7 +18,7 @@ public class Jugador implements AccesoProfundidad {
     private NaveExploradora nave;
     private boolean trajeTermico;
     private boolean mejoraTanque; 
-
+    private boolean victoria;
 //---------------Constructores-----------------------
     public Jugador(Zona zonaInicial){
         this.tanqueOxigeno = new Oxigeno();
@@ -29,6 +29,7 @@ public class Jugador implements AccesoProfundidad {
         this.nave = new NaveExploradora();
         this.trajeTermico = false;
         this.mejoraTanque = false;
+        this.victoria = false;
         
     }
     public Jugador(Oxigeno tanqueOxigeno, List<Item> inventario, Zona zonaActual, int profundidadActual, boolean tienePlanos, NaveExploradora nave, boolean trajeTermico, boolean mejorarTanque){
@@ -40,6 +41,7 @@ public class Jugador implements AccesoProfundidad {
         this.nave = nave;
         this.trajeTermico = trajeTermico;
         this.mejoraTanque = mejorarTanque;
+        this.victoria = false;
     }
     
 //---------------Setters y Getters-----------------------    
@@ -51,10 +53,16 @@ public class Jugador implements AccesoProfundidad {
     public boolean getTienePlanos(){return tienePlanos;}
     public boolean getTrajeTermico(){return trajeTermico;}
     public boolean getMejoraTanque(){return mejoraTanque;}
-    public void setProfundidadActual(int nuevaProfundidad){
-        this.profundidadActual = nuevaProfundidad;
-    }
-    public void setZonaActual(Zona zona){ // revisar correcta implementacion junto a la interfaz
+    public boolean getVictoria(){return victoria;}
+    public void setProfundidadActual(int nuevaProfundidad){this.profundidadActual = nuevaProfundidad;}
+    
+    /*
+    * Nombre: setZonaActual
+    * Descripción: Recibe una zona y determina si el jugador puede acceder o no a ella segun los criterios establecidos en la interfaz puedeAcceder, en caso de que el jugador pueda acceder, setea el jugador en la nueva zona
+    * @param Parámetro(s): variable de tipo Zona con la zona a la cual se quiere acceder
+    * @return: no retorna, es void
+    */
+    public void setZonaActual(Zona zona){ 
         if(this.puedeAcceder(zona.getProfundidadMin())){
             this.zonaActual = zona;
         }
@@ -64,16 +72,38 @@ public class Jugador implements AccesoProfundidad {
     }
 
 //---------------Otros-------------------------
+    
+    /*
+    * Nombre: puedeAcceder
+    * Descripción: Dada la profundidad minima de una zona retorna true en caso de que el jugador cumpla con las mejoras necesarias que requiera la zona a la hora de querer entrar, en caso contrario retorna false
+    * @param Parámetro(s): int requerido, representa la profundidad minima de la nueva zona 
+    * @return: retorna un valor booleano
+    */
     public boolean puedeAcceder(int requerido){ //profundidad minima de la nueva zona
         if(requerido >= 1000){ //para entrar a la zona volcanica
             return mejoraTanque && trajeTermico && nave.getModuloInstalado(); // si no hay traje, tanque y modulo profundidad retorna false, si estan va a ser true
         }
         return true;
-    }    
+    }  
 
+    /*
+    * Nombre: encontrarPlanos
+    * Descripción: cambia el estado de la variable tienePlanos de false a true, se llama una vez se encuentran los planos
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
+    public void encontrarPlanos(){
+        this.tienePlanos = true;
+    }
 
-
-public void agregarAlInventario(ItemTipo tipo, int cantidad){
+    
+    /*
+    * Nombre: agregraAlInventario
+    * Descripción: recibe un item junto con la cantidad que se quiere añadir al inventario del jugador, en caso de que el objeto no se encuentre con anterioridad en el inventario, se crea una nueva instancia en la lista del iventario
+    * @param Parámetro(s): variable ItemTipo con e tipo del item a añadir, y int cantidad con la cantidad a añadir
+    * @return: no retoran, es void
+    */
+    public void agregarAlInventario(ItemTipo tipo, int cantidad){
         if(cantidad > 0){
             for(Item elemento : inventario){
                 if(elemento.getTipo() == tipo){
@@ -85,6 +115,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         }
     }
 
+    /*
+    * Nombre: vaciarInventario
+    * Descripción: Vacia el inventario del jugador en caso de que este muera, pero no elimina los objetos clave como Modulo profundidad para no arruinar la progresion del juego
+    * @param Parámetro(s): no recive
+    * @return: no retoran, es void
+    */
     public void vaciarInventario(){
         int cantidadModuloProfundidad = 0;
         int cantidadPiezaTanque = 0;
@@ -110,6 +146,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         this.agregarAlInventario(ItemTipo.PLANO_NAVE, cantidadPlanoNave);
     }
 
+    /*
+    * Nombre: consumirItem
+    * Descripción: consume el item que se entregue junto con la cantidad deseada a consumir en caso de que hayan suficientes unidades de dicho objeto, en caso de que no hayan suficientes unidades imprime un mensaje de error (los objetos se eliminan de la bodega, no del inventario del jugador)
+    * @param Parámetro(s): ItemTipo con el tipo del objeto y int cantidad con la cantidad a eliminar
+    * @return: no retoran, es void
+    */
     public void consumirItem(ItemTipo tipo, int cantidad){
         for(Item elemento : this.getNave().getBodega()){
             if(elemento.getTipo() == tipo){
@@ -121,6 +163,13 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         }
         System.out.println("No tienes suficiente " + tipo);
     }
+
+    /*
+    * Nombre: mejorarTanque
+    * Descripción: aplica las mejoras del tanque en caso de que se cuenten con los materiales necesarios para mejorarlo, en caso de que no se encuentren los recursos necesarios para mejorar el tanque, la  funcion de consumirItem se encarga de imprimir el mensaje de error
+    * @param Parámetro(s): no recive
+    * @return: no retoran, es void
+    */
     public void mejorarTanque(){
         for(Item elemento : this.getNave().getBodega()){
             if(elemento.getTipo() == ItemTipo.PIEZA_TANQUE){
@@ -136,6 +185,13 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         }
         this.consumirItem(ItemTipo.PIEZA_TANQUE, 3);
     }
+
+    /*
+    * Nombre: mejorarOxigeno
+    * Descripción: aplica la mejora de oxigeno en caso de que se cuente con los recursos necesarios en la bodega de la nave
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void mejorarOxigeno(){
         int cantidadPlata = 0;
         int cantidadCuarzo = 0;
@@ -157,6 +213,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("No tienes suficientes recursos para aplicar la mejora");
     }
 
+    /*
+    * Nombre: crearTrajeTermico
+    * Descripción: crea el traje termico en caso de que l jugador cuente con los recursos necesarios para su fabricacion. Tambien setea la variable de Traje termico a true
+    * @param Parámetro(s):no recibe 
+    * @return: no retoran, es void
+    */
     public void crearTrajeTermico(){
         int cantidadSilicio = 0;
         int cantidadOro = 0;
@@ -183,6 +245,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("Faltan recursos para crear el traje termico");
     }   
 
+    /*
+    * Nombre: instalarModuloProfundidad
+    * Descripción: instala el modulo profundidad a la nave, y consume los objetos claves para eso, ademas de eso llama al metodo de instalarModuloProfundidad desde la naveExploradora para aumentar la profundidad maxima de la nave en 1000 unidades adiconales
+    * @param Parámetro(s): no tiene
+    * @return: no retoran, es void
+    */
     public void instalarModuloProfundidad(){
         int cantidadModuloProfundidad = 0;
         for(Item elemento : this.getNave().getBodega()){
@@ -199,6 +267,58 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("Necesitas encontrar el modulo profundidad y depositarlo en la bodega para poder instalarlo");
     }
 
+    /*
+    * Nombre: repararNaveEstrellada
+    * Descripción: en caso de que se cuenten con los recursos necesarios se "repara la nave" seteando la variable de victoria en true, lo cual corta todos los bucles del main y imprime el mensaje de victoria, en caso de que no se cumpla alguno de los requisitos establecidos para reparar la nave se imprime un mensaje indicando el error
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
+    public void repararNaveEstrellada(){
+        if(this.getZonaActual().getNombre() != "Nave Estrellada"){
+            System.out.println("Necesitas estar en la Nave estrellada para repararla");
+            return;
+        }
+        if(!this.getTienePlanos()){
+            System.out.println("Necesitas los planos de la nave para repararla");
+            return;
+        }
+        int cantidadTitanio = 0;
+        int cantidadAcero = 0;
+        int cantidadUranio = 0;
+        int cantidadSulfuro = 0;
+        for(Item elemento : this.getNave().getBodega()){
+            if(elemento.getTipo() == ItemTipo.titanio){
+                cantidadTitanio = elemento.getCantidad();
+            }
+            if(elemento.getTipo() == ItemTipo.acero){
+                cantidadAcero = elemento.getCantidad();
+            }
+            if(elemento.getTipo() == ItemTipo.uranio){
+                cantidadUranio = elemento.getCantidad();
+            }
+            if(elemento.getTipo() == ItemTipo.sulfuro){
+                cantidadSulfuro = elemento.getCantidad();
+            }
+        }
+        if(cantidadTitanio >= 50 && cantidadAcero >= 30 && cantidadUranio >= 15 && cantidadSulfuro >= 20){
+            this.consumirItem(ItemTipo.titanio, 50);
+            this.consumirItem(ItemTipo.acero, 30);
+            this.consumirItem(ItemTipo.uranio, 15);
+            this.consumirItem(ItemTipo.sulfuro, 20);
+            System.out.println("Se reparo la naveeee shiiiiiiiiiii");
+            this.victoria = true; // se gana papus
+            return;
+        }
+        System.out.println("Faltan recursos para reparar la nave");
+
+    }
+
+    /*
+    * Nombre: verEstadoJugador
+    * Descripción: imprime el menu de seleccion de acciones, junto con el estado del jugador, da detalles del oxigeno, zona actual, profundidad, mejoras , entre otros
+    * @param Parámetro(s): no recibe 
+    * @return: no retoran, es void
+    */
     public void verEstadoJugador(){
         System.out.println("==== Subnautica ====");
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante() + " | Traje Termico: " + getTrajeTermico() + " | Mejora Tanque: " + getMejoraTanque() + " | Modulo Profundidad: " + this.getNave().getModuloInstalado());
@@ -210,6 +330,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("0) Salir");
     }
 
+    /*
+    * Nombre: verMenuNave
+    * Descripción: imprime el menu de seleccion de accion de la nave junto con ciertos detalles del estado del jugador
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void verMenuNave(){
         this.setProfundidadActual(this.getNave().getProfundidadAnclaje());
         System.out.println("==== Subnautica ====");
@@ -221,6 +347,13 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("5) Ver inventario de la nave");
         System.out.println("0) Salir de la nave");
     }
+
+    /*
+    * Nombre: verMenuCreacion
+    * Descripción: imprime el menu de creacion de objetos
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void verMenuCreacion(){
         System.out.println("==== Subnautica ====");
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
@@ -234,6 +367,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("8) Reparar Nave estrellada"); //se debe estar en nave estrellada
     }
 
+    /*
+    * Nombre: verMenuZonas
+    * Descripción: imprime el menu de eleccion de zonas
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void verMenuZonas(){
         System.out.println("==== Subnautica ====");
         System.out.println("Zona actual: " + this.zonaActual.getNombre() + " | Profundidad (Anclaje, Buzo): (" + this.getNave().getProfundidadAnclaje() + " ," + this.profundidadActual + ") m | Oxigeno: " + this.tanqueOxigeno.getOxigenoRestante());
@@ -243,6 +382,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         System.out.println("4) Nave Estrellada");
     }
 
+    /*
+    * Nombre: verMenuRecolectar
+    * Descripción: imprime el menu de recursos que se pueden recolectar segun la zona en la que se encuentra actualmente el jugador
+    * @param Parámetro(s): recibe la variable del Jugador
+    * @return: no retoran, es void
+    */
     public void verMenuRecolectar(Jugador jugador){
         System.out.println("==== Subnautica ====");
         if(jugador.getZonaActual().getNombre() == "Zona Arrecife"){
@@ -272,8 +417,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         }
     }
 
-
-
+    /*
+    * Nombre: verInventarioJugador
+    * Descripción: Imprime el inventario del jugador en la consola señalando los items con su respectiva cantidad almacenada
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void verInventarioJugador(){
         System.out.println("----Inventario Jugador----");
         if(inventario.isEmpty()){
@@ -286,6 +435,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         }
     }
 
+    /*
+    * Nombre: oxigenoMoverJugador
+    * Descripción: calcula la cantidad de oxigeno que consume mover al jugador desde su profundidad actual, hasta una profundidad determinada
+    * @param Parámetro(s): un int con la nueva profundidad a la que se quiere mover al jugador
+    * @return: retorna las unidades de oxigeno que se deben consumir tras mover al jugador
+    */
     public int oxigenoMoverJugador(int nuevaProfundidad){
         double profundidadNormalizada = this.zonaActual.profundidadNormalizada(this);
         double deltaZ = Math.abs(this.profundidadActual - nuevaProfundidad);
@@ -294,6 +449,12 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         return (int)calculoOxigeno;
     }
 
+    /*
+    * Nombre: subirDescender
+    * Descripción: recibe la nueva profundidad a la que se quiere mover el jugador, y llama a oxigenoMoverJugador para calcular la cantidad de oxigeno a consumir y lo consume, ademas de esto impide el cambio de zona a nado y suguiere volver a la nave para cambiar de zona
+    * @param Parámetro(s): un int con la nueva profundidad a la que se quiere mover el jugador
+    * @return: no retoran, es void
+    */
     public void subirDescender(int nuevaProfundidad){  //actualiza profundidad actual y consume oxigeno
         if(nuevaProfundidad > this.getZonaActual().getProfundidadMax()){//si intenta cambiar de zona a nado lo dejamos en la profundidad maxima permitida pa q se vaya a la nave el jugador
             System.out.println("Para cambiar de zona vuelve a la nave");
@@ -314,14 +475,17 @@ public void agregarAlInventario(ItemTipo tipo, int cantidad){
         this.profundidadActual = nuevaProfundidad;
     }
 
+    /*
+    * Nombre: derrotado
+    * Descripción: en caso de que el jugador sufra la condicion de derrota se vacia su inventario con el metodo vaciarInventario y se setea su nueva profundidad en la del anclaje de la nave(es decir vuelve a la nave) y imprime un mensaje explicando que el jugador quedo inconciente y volvio a la nave
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void derrotado(){
         this.vaciarInventario();
         this.profundidadActual = this.getNave().getProfundidadAnclaje();
         System.out.println("Has quedado inconsciente, volviste a la nave y perdiste todo tu inventario");
         this.getTanqueOxigeno().recargarCompleto();
     }
-
-
-
 
 }

@@ -10,22 +10,30 @@ public class ZonaArrecife extends Zona{
 
 //---------------Constructores-----------------------
     public ZonaArrecife(){ 
-        super("Zona Arrecife", 0, 199,1, 3);
+        super("Zona Arrecife", 0, 199,1, 3,ItemTipo.cuarzo, ItemTipo.silicio, ItemTipo.cobre, ItemTipo.PIEZA_TANQUE);
         this.piezasTanque = 3; // 30% probabilidad de encontrar pieza al explorar
-        this.getRecursos().add(ItemTipo.cuarzo);
-        this.getRecursos().add(ItemTipo.silicio);
-        this.getRecursos().add(ItemTipo.cobre);
-        this.getRecursos().add(ItemTipo.PIEZA_TANQUE);
     }
 
 //---------------Setters y Getters-------------------     
     public int getPiezasTanque(){return piezasTanque;}
 
+//---------------Otros-------------------------------    
+    /*
+    * Nombre: obtenerPiezaTanque
+    * Descripción: cada vez que se llama resta una pieza de tanque en la pool de objetos claves de la zona
+    * @param Parámetro(s): no recibe
+    * @return: no retoran, es void
+    */
     public void obtenerPiezaTanque(){
         piezasTanque -= 1; 
     }
 
-//---------------Otros-------------------------------    
+    /*
+    * Nombre: explorar
+    * Descripción: realiza la accion de explorar, gastando el oxigeno correspondiente a la zona y la profundidad de la zona, ademas de determinar la cantidad y el tipo de objetos que se obtendran tras no obtener el objeto unico de la zona
+    * @param Parámetro(s): variable del jugador
+    * @return: no retoran, es void
+    */
     public void explorar(Jugador jugador){
         //la primera parte se encarga del consumo del oxigeno
         double profundidadNormalizada = profundidadNormalizada(jugador);
@@ -60,6 +68,12 @@ public class ZonaArrecife extends Zona{
         }        
     }
 
+    /*
+    * Nombre: recolectar 
+    * Descripción: realiza la accion de recolectar, lo que implica consumir el oxigeno correspondiente segun las formulas del pdf, y permite obtener la cantidad del recurso elegido por el jugador correspondiente a la profundidad en la que se encuentra este ultimo
+    * @param Parámetro(s): variable del jugador y variable de tipo ItemTipo con el recurso que desea recolectar el jugador
+    * @return: no retorna, es void
+    */
     public void recolectar(Jugador jugador, ItemTipo recurso){
         double profundidadNormalizada = profundidadNormalizada(jugador);
         double calculoOxigeno = Math.ceil(10 + 6*profundidadNormalizada); //no sumamos presion y redondeamos hacia arriba
