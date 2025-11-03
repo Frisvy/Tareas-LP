@@ -1,0 +1,21 @@
+#lang scheme
+
+(define (calibra-simple f lecturas)
+  (if(null? lecturas)
+     '() ;si la lista esta vacia se retorna la lista vacia
+     (cons (f (car lecturas))
+              (calibra-simple f (cdr lecturas)))))
+
+;(define (calibra-simple f lecturas)
+
+
+
+(define corr-sat (lambda (x)
+(let ((y (+ x 5)))
+(max 0 (min 100 y)))))
+
+;Casos de prueba
+(calibra-simple corr-sat '())
+(calibra-simple corr-sat '(95 -3 50))
+(calibra-simple (lambda (x) (if (< x 10) 0 x))'(3 12 8 20))
+(calibra-simple (lambda (x) (if (negative? x) 0 (sqrt x)))'(0 1 4 9 -5 16))
