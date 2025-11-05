@@ -12,13 +12,18 @@ Descripcion: aplica la funcion del parametro 1 a cada elemento de la lista del p
      (cons (f (car lecturas))
               (calibra-simple f (cdr lecturas)))))
 
-
+"""
+Parametro 1: alguna funcion definida por el usuario que modifique elementos de una lista
+Parametro 2: lista de numeros
+Descripcion: aplica la funcion del parametro 1 a cada elemento de la lista del parametro 2. Lo hace por medio de recursion simple
+"""
 (define (calibra-cola f lecturas)
   (define (loop f lecturas acumulador)
     (if(null? lecturas)
        (reverse acumulador)
        (loop f (cdr lecturas)(cons (f (car lecturas)) acumulador))))
   (loop f lecturas '()))
+
 
 ;Casos de prueba
 

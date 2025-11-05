@@ -27,44 +27,4 @@ un paso a paso de como hacer la funcion que es casi que copiar y pegar, gracias 
 (radar-detecta 'titanio '(titanio cobre titanio));2
 (radar-detecta 'diamante'(sector-a (cueva-1 diamante)(cueva-2 (nodo diamante diamante)) coral));3
 (radar-detecta 'cobre'(scan ((cobre) ((cobre titanio) arena)) (baliza cobre)));3
-"holaa"
-;; Prueba A7: Recurso en nivel 2
-(radar-detecta 'plata '(a (b c) (plata (d e)) f))
-; Debe retornar: 1
-
-;; Prueba A8: Anidación profunda (3 niveles)
-(radar-detecta 'uranio '((uranio) (uranio (uranio))))
-; Debe retornar: 3
-
-;; Prueba A9: Recurso idéntico a una palabra común
-(radar-detecta 'vacio '((vacio) a (b (vacio)) c))
-; Debe retornar: 2
-
-;; Prueba A10: Mezcla de plano y anidado
-(radar-detecta 'agua '((agua) (agua) agua))
-; Debe retornar: 3
-
-;; Prueba A11: Sin ocurrencias
-(radar-detecta 'magnesio '(x y z))
-; Debe retornar: 0
-
-;; Prueba A12: Anidación recurrente
-(radar-detecta 'a '(a (a (a)) a))
-; Debe retornar: 4
-
-;; Prueba A13: Sin el símbolo, solo otros elementos
-(radar-detecta 'piedra '((1 2) (3 4) 5))
-; Debe retornar: 0
-
-;; Prueba A14: Múltiples ocurrencias en diferentes niveles
-(radar-detecta 'hierro '(hierro cobre (hierro litio) (zinc (hierro))))
-; Debe retornar: 3
-
-;; Prueba A15: Anidación profunda sin el recurso
-(radar-detecta 'aire '((a) (b (c (d (e))))))
-; Debe retornar: 0
-
-;; Prueba A16: Símbolo buscado en una lista de solo sublistas
-(radar-detecta 'a '((a b) (c d) (e f)))
-; Debe retornar: 1
 
