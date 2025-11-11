@@ -9,8 +9,7 @@ Descripcion: aplica la funcion del parametro 1 a cada elemento de la lista del p
 (define (calibra-simple f lecturas)
   (if(null? lecturas)
      '() ;si la lista esta vacia se retorna la lista vacia
-     (cons (f (car lecturas))
-              (calibra-simple f (cdr lecturas)))))
+     (cons (f (car lecturas))(calibra-simple f (cdr lecturas))))); el primer elemento de la lista es la cabeza de lecturas, y la cola se construye recursivamente
 
 """
 Parametro 1: alguna funcion definida por el usuario que modifique elementos de una lista
@@ -18,11 +17,11 @@ Parametro 2: lista de numeros
 Descripcion: aplica la funcion del parametro 1 a cada elemento de la lista del parametro 2. Lo hace por medio de recursion simple
 """
 (define (calibra-cola f lecturas)
-  (define (loop f lecturas acumulador)
-    (if(null? lecturas)
+  (define (loop f lecturas acumulador); funcion auxiliar para añadir un parametro a la funcion original
+    (if(null? lecturas); como la  lista a retornar se construye al reves, cuando se procesan todos los elementos se tiene que dar vuelta con reverse
        (reverse acumulador)
        (loop f (cdr lecturas)(cons (f (car lecturas)) acumulador))))
-  (loop f lecturas '()))
+  (loop f lecturas '()));ultimo elemento es la llamada recursiva
 
 
 ;Casos de prueba
