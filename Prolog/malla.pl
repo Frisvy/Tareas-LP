@@ -170,18 +170,16 @@ prerrequisitos('INF-310', ['INF-228', 'INF-309']).
 %nombre: habilitada
 %parametro 1: asignatura a comprobar
 %parametro 2: lista de ramos aprobados
-%descripcion: dado los parametro determina si la asignatura se puede cursar si los prerrequisitos estan aprobados, para esto utiliza un predicado auxiliar 
-% llamado comprobar_prerrequisitos que comprueba si los prerrequisitos se encuentran en la lista de aprobados
+%descripcion: dado los parametro determina si la asignatura se puede cursar si los prerrequisitos estan aprobados, para esto utiliza un predicado auxiliar llamado comprobar_prerrequisitos que comprueba si los prerrequisitos se encuentran en la lista de aprobados
 
 habilitada(Asignatura, Aprobados):-
-    prerrequisitos(Asignatura, X),
+    prerrequisitos(Asignatura, X), %member pero con 2 listas
     comprobar_prerrequisitos(X, Aprobados),!.
 
 %nombre: comprobar_prerrequisitos
 %parametro 1: lista de prerrequisitos
 %parametro 2: lista de ramos aprobados
-%descripcion: dadas las 2 listas verifica si la lista de prerrequisitos se encuentra dentro de la de aprobados, la funcion es practicamente un 
-%member que recibe 2 listas y comprueba si la lista 1 esta dentro de la lista 2.
+%descripcion: dadas las 2 listas verifica si la lista de prerrequisitos se encuentra dentro de la de aprobados, la funcion es practicamente un member que recibe 2 listas y comprueba si la lista 1 esta dentro de la lista 2.
 
 comprobar_prerrequisitos([], _). %corta la recursion
 comprobar_prerrequisitos([Prerrequisito|Resto], Aprobados):-
@@ -194,8 +192,7 @@ comprobar_prerrequisitos([Prerrequisito|Resto], Aprobados):-
 %nombre: es_prerrequisito
 %parametro 1: prerrequsisito
 %parametro 2: asignatura a comprobar
-%descripcion: el predicado compureba si el prerrequisito (parametro 1 ) es prerrequisito de la asignatura (parametro 2), para esto utiliza el caso base 
-% que es el caso donde es prerrequisito directo, y si es indirecto utiliza recursion para probar con toda la lista de prerrequisitos si es o no es 
+%descripcion: el predicado compureba si el prerrequisito (parametro 1 ) es prerrequisito de la asignatura (parametro 2), para esto utiliza el caso base que es el caso donde es prerrequisito directo, y si es indirecto utiliza recursion para probar con toda la lista de prerrequisitos si es o no es 
 es_prerrequisito(Pre, Asignatura):- 
     prerrequisitos(Asignatura, Prerrequisitos),
     member(Pre, Prerrequisitos),!. % si Pre es prerrequisito directo retorna true
@@ -203,7 +200,7 @@ es_prerrequisito(Pre, Asignatura):-
 es_prerrequisito(Pre, Asignatura):-
     prerrequisitos(Asignatura, Prerrequisitos),
     member(Miau, Prerrequisitos), % se saca una asignatura cualquiera de la lista de Prerrequisitos (un Miau) y se verifica si es prerrequisito o no con recursion
-    es_prerrequisito(Pre, Miau),!. 
+    es_prerrequisito(Pre, Miau),!. %corte para evitar backtracking
 
 %------------permite_dar/3----------------------
 %nombre: permite_dar
@@ -212,5 +209,5 @@ es_prerrequisito(Pre, Asignatura):-
 %parametro 3: lista de retorno 
 %descripcion: dada la lista de asignaturas aprobadas y la asignatura a aprobar, la funcion busca las asignaturas que se van a desbloquear para poder ser tomadas gracias a la aprobacion de la asignatura nueva (parametro 2)
 permite_dar(AprobadosPrev, AsignaturaRecienAprobada, NuevosHabilitados):-
-    ListaAprobados = [AsignaturaRecienAprobada | AprobadosPrev], 
+    ListaAprobados = [AsignaturaRecienAprobada | AprobadosPrev], %lista actualizada con los ramos aprobados
     findall( Asignatura, (asignatura(Asignatura, _, _, _, _),\+ habilitada(Asignatura, AprobadosPrev), habilitada(Asignatura, ListaAprobados) ) , NuevosHabilitados). % el findall mete en la lista de NuevosHabilitados todas las asignaturas que cumplen que; no estaban habilitadas con la lista antigua de aprobados, y que pasaron a estar habilitadas con la nueva lista de aprobadoss
